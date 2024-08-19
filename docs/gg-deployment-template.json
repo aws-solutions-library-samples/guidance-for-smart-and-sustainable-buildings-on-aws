@@ -1,0 +1,39 @@
+{
+  "targetArn": "arn:aws:iot:{aws_region}:{aws_account}:thing/{thing_name}",
+  "deploymentName": "Deployment for GreengrassDevice",
+  "components": {
+    "aws.greengrass.Cli": {
+      "componentVersion": "2.12.0"
+    },
+    "aws.greengrass.Nucleus": {
+      "componentVersion": "2.12.0",
+      "configurationUpdate": {
+        "merge": "{\"interpolateComponentConfiguration\": true}"
+      }
+    },
+    "aws.greengrass.ShadowManager": {
+      "componentVersion": "2.3.8",
+      "configurationUpdate": {
+        "merge": "{\"strategy\": {\"type\": \"realTime\"},\"synchronize\": {\"coreThing\": {\"classic\": true,\"namedShadows\": [\"ventilation\"]},\"direction\": \"betweenDeviceAndCloud\"}}"
+      }
+    },
+    "collectSensorData": {
+      "componentVersion": "1.0.0",
+      "runWith": {}
+    },
+    "automateVentilation": {
+      "componentVersion": "1.0.0",
+      "runWith": {}
+    }
+  },
+  "deploymentPolicies": {
+    "failureHandlingPolicy": "DO_NOTHING",
+    "componentUpdatePolicy": {
+      "timeoutInSeconds": 60,
+      "action": "NOTIFY_COMPONENTS"
+    },
+    "configurationValidationPolicy": {
+      "timeoutInSeconds": 60
+    }
+  }
+}

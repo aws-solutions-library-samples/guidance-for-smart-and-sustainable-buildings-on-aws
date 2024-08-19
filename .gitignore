@@ -1,0 +1,39 @@
+### vsCode ###
+.vscode
+*.code-workspace
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+*.js
+!jest.config.js
+*.d.ts
+**/node_modules
+**/dist
+**/build
+**/.DS_Store
+**/.angular
+**/.idea
+cdk.out
+.cdk.staging
+**/data/**.csv
+
+.env
+
+# Secret for local development
+secret.md
+
+# Python modules for Lambda Layer
+lib/lambda/layer/open-weather-map/python
+lib/lambda/layer/requests/python
