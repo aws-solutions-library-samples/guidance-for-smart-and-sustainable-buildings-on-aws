@@ -231,9 +231,9 @@ npm ci
 If this is your first time setting up AWS IAM credentials for using AWS CDK, refer [Getting started with the AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) to learn more.
 
 ```bash
-export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
-export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-export AWS_SESSION_TOKEN=AQoDYXdzEJr1K...o5OytwEXAMPLE=
+export AWS_ACCESS_KEY_ID=<insert your access key>
+export AWS_SECRET_ACCESS_KEY=<insert secret access key>
+export AWS_SESSION_TOKEN=<insert session token>
 ```
 
 **4. Set AWS Region to deploy resources**

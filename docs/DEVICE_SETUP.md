@@ -198,9 +198,9 @@ java -version
 3. Configure AWS IAM credentials.
 
 ```bash
-export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
-export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-export AWS_SESSION_TOKEN=AQoDYXdzEJr1K...o5OytwEXAMPLE=
+export AWS_ACCESS_KEY_ID=<insert your access key>
+export AWS_SECRET_ACCESS_KEY=<insert secret access key>
+export AWS_SESSION_TOKEN=<insert session token>
 ```
 
 4. Install Greengrass Core component.
