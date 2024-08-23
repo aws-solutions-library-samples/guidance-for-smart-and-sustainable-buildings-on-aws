@@ -45,11 +45,15 @@ This guidance uses the [AWS Cloud Development Kit (AWS CDK)](https://aws.amazon.
 
 ### Cost
 
-You are responsible for the cost of AWS services used while running this Guidance sample code. As of August 2024, the estimated cost for running this solution in the US West 2 (Oregon) region is approximately $233.16 per month.
+You are responsible for the cost of AWS services used while running this Guidance sample code.
 
 Note: Actual costs may vary based on factors such as the number of devices, Amazon Managed Grafana users, and frequency of Amazon Timestream queries
 
-#### Assumptions
+#### Example 1: 2 devices
+
+As of August 2024, the estimated cost for running this solution in the US West 2 (Oregon) region with following assumption is approximately $117.43 per month.
+
+##### Assumptions
 
 This cost scenario is based on the following configuration:
 
@@ -57,21 +61,51 @@ This cost scenario is based on the following configuration:
 - Energy usage API data collection at 1-minute intervals (43,200 requests/month)
 - Weather data collection at 5-minute intervals (10,800 requests/month)
 
-#### Cost Breakdown by Service
+##### Cost Breakdown by Service
 
-| AWS service                               | Dimensions                                                                                                                                  | Monthly Cost [USD] |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| AWS IoT Greengrass                        | 2 Active Devices                                                                                                                            | $0.33              |
-| AWS IoT Core                              | 86,400 connection minutes, 518,400 Messages, 518,400 Device Shadow operations,518,400 Rule Engine actions                                   | $1.42              |
-| AWS Lambda (IoT Sensor Data Collection)   | 518,400 requests, 128 MB memory allocation, 200 msec duration                                                                               | $0.32              |
-| AWS Lambda (Device Shadow)                | 518,400 requests, 128 MB memory allocation, 1s duration                                                                                     | $1.18              |
-| AWS Lambda (Energy Usage Data Collection) | 43,200 requests, 128 MB memory allocation, 200 s duration                                                                                   | $0.19              |
-| AWS Lambda (Weather Data Collection)      | 10,800 requests, 128 MB memory allocation, 1s duration                                                                                      | $0.02              |
-| Amazon Timestream                         | 1KB record size, 0.62 GB memory store writes, 32 TCU x 0.016 hours x 730 hours, 3 days memory retention, 3 month magnetic storage retention | $195.5             |
-| Amazon Managed Grafana                    | 2 active editors, 3 active viewers                                                                                                          | $33                |
-| Amazon DynamoDB                           | 1 million read requests units                                                                                                               | $0.13              |
-| AWS Secrets Manager                       | 2 secrets, 54,000 API calls                                                                                                                 | $1.07              |
-| **Total Estimated Monthly Cost**          |                                                                                                                                             | **$233.16**        |
+| AWS service                               | Dimensions                                                                                                                  | Monthly Cost [USD] |
+| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| AWS IoT Greengrass                        | 2 Active Devices                                                                                                            | $0.33              |
+| AWS IoT Core                              | 86,400 connection minutes, 518,400 Messages, 518,400 Device Shadow operations,518,400 Rule Engine actions                   | $1.42              |
+| AWS Lambda (IoT Sensor Data Collection)   | 518,400 requests, 128 MB memory allocation, 200 msec duration                                                               | $0.32              |
+| AWS Lambda (Device Shadow)                | 518,400 requests, 128 MB memory allocation, 1s duration                                                                     | $1.18              |
+| AWS Lambda (Energy Usage Data Collection) | 43,200 requests, 128 MB memory allocation, 200 ms duration                                                                  | $0.19              |
+| AWS Lambda (Weather Data Collection)      | 10,800 requests, 128 MB memory allocation, 1s duration                                                                      | $0.02              |
+| Amazon Timestream                         | 1KB record size, 0.62 GB memory store writes, 4 TCU x 40 hours, 3 days memory retention, 3 month magnetic storage retention | $84.77             |
+| Amazon Managed Grafana                    | 2 active editors, 2 active viewers                                                                                          | $28                |
+| Amazon DynamoDB                           | 1 million read requests units                                                                                               | $0.13              |
+| AWS Secrets Manager                       | 2 secrets, 54,000 API calls                                                                                                 | $1.07              |
+| **Total Estimated Monthly Cost**          |                                                                                                                             | **$117.43**        |
+
+#### Example 2: 1,000 devices
+
+As of August 2024, the estimated cost for running this solution in the US West 2 (Oregon) region is approximately $4,671.12 per month.
+
+##### Assumptions
+
+This cost scenario is based on the following configuration:
+
+- IoT Sensor Data ingestion from 1,000 IoT Greengrass Devices at 10-second intervals (259,200,000 requests/month)
+- Energy usage API data collection at 1-minute intervals (43,200 requests/month)
+- Weather data collection at 5-minute intervals (10,800 requests/month)
+- 10 devices are installed per building. Each building has 1 Amazon Managed Grafana viewer.
+- Amazon Timestream queries are made 8 hours/day for 30 days/month with average of 4 TCU.
+
+##### Cost Breakdown by Service
+
+| AWS service                               | Dimensions                                                                                                                     | Monthly Cost [USD] |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| AWS IoT Greengrass                        | 1,000 Active Devices                                                                                                           | $163.60            |
+| AWS IoT Core                              | 43,200,000 connection minutes, 259,200,000 Messages, 259,200,000 Device Shadow operations, 259,200,000 Rule Engine actions     | $703.34            |
+| AWS Lambda (IoT Sensor Data Collection)   | 259,200,000 requests, 128 MB memory allocation, 200 msec duration                                                              | $159.84            |
+| AWS Lambda (Device Shadow)                | 259,200,000 requests, 128 MB memory allocation, 1s duration                                                                    | $591.84            |
+| AWS Lambda (Energy Usage Data Collection) | 43,200 requests, 128 MB memory allocation, 100s duration                                                                       | $9.01              |
+| AWS Lambda (Weather Data Collection)      | 10,800 requests, 128 MB memory allocation, 100s duration                                                                       | $2.25              |
+| Amazon Timestream                         | 1KB record size, 310.80 GB memory store writes, 4 TCU x 730 hours, 3 days memory retention, 3 month magnetic storage retention | $2,459.67          |
+| Amazon Managed Grafana                    | 2 active editors, 100 active viewers                                                                                           | $518.00            |
+| Amazon DynamoDB                           | 500 million read requests units                                                                                                | $62.5              |
+| AWS Secrets Manager                       | 2 secrets, 54,000 API calls                                                                                                    | $1.07              |
+| **Total Estimated Monthly Cost**          |                                                                                                                                | **$4,671.12**      |
 
 ### Folder structure
 
