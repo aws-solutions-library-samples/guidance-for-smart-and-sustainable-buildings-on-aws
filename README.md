@@ -215,8 +215,6 @@ This section provides the steps required to configure your environment before de
 
 **1. Cloning the repository for this guidance**
 
-<!-- TODO Replace with GitHub Repo -->
-
 ```bash
 git clone https://github.com/aws-solutions-library-samples/guidance-for-smart-and-sustainable-buildings-on-aws-demo.git
 ```
