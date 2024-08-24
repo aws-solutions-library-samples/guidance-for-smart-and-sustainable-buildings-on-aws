@@ -1,4 +1,4 @@
 pyowm
 requests
-urllib3==1.26.16
+urllib3
 setuptools
