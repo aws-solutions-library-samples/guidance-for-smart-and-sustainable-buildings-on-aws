@@ -7,6 +7,7 @@ import logging
 import json
 from lib.bme280 import BME280
 import awsiot.greengrasscoreipc.clientv2 as clientV2
+import shlex
 
 # Logger Configuration
 logger = logging.getLogger()
@@ -27,9 +28,14 @@ INTERVAL = 10
 def read_co2_data():
     """Read CO2 data from the MH-Z19 sensor"""
     try:
-        co2_data_raw = subprocess.check_output(
-            ["sudo", PYTHON_COMMAND_PATH, "-m", "mh_z19"]
+        # Sanitize environmental variable
+        python_command = shlex.quote(
+            os.environ.get("PYTHON_COMMAND_PATH", "/usr/bin/python3")
         )
+
+        command = [python_command, "-m", "mh_z19"]
+
+        co2_data_raw = subprocess.check_output(command, shell=False)
         co2_data = json.loads(co2_data_raw.decode("utf-8"))
         logger.info(f"CO2: {co2_data}")
 
