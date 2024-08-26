@@ -17,6 +17,12 @@
         "merge": "{\"strategy\": {\"type\": \"realTime\"},\"synchronize\": {\"coreThing\": {\"classic\": true,\"namedShadows\": [\"ventilation\"]},\"direction\": \"betweenDeviceAndCloud\"}}"
       }
     },
+    "aws.greengrass.LogManager": {
+      "componentVersion": "2.3.7",
+      "configurationUpdate": {
+          "merge": "{\"logsUploaderConfiguration\":{\"systemLogsConfiguration\":{\"uploadToCloudWatch\":\"true\"},\"componentLogsConfigurationMap\":{\"collectSensorData\":{}, \"automateVentilation\":{}}}}"
+      }
+    },
     "collectSensorData": {
       "componentVersion": "1.0.0",
       "runWith": {}
