@@ -1,5 +1,5 @@
 {
-  "targetArn": "arn:aws:iot:us-west-2:481564450150:thing/SensingDevice1",
+  "targetArn": "arn:aws:iot:{aws_region}:{aws_account}:thing/SensingDevice1",
   "deploymentName": "Deployment for SensingDevice1",
   "components": {
     "aws.greengrass.Cli": {
@@ -9,6 +9,12 @@
       "componentVersion": "2.12.0",
       "configurationUpdate": {
         "merge": "{\"interpolateComponentConfiguration\": true}"
+      }
+    },
+    "aws.greengrass.LogManager": {
+      "componentVersion": "2.3.1",
+      "configurationUpdate": {
+          "merge": "{\"logsUploaderConfiguration\":{\"systemLogsConfiguration\":{\"uploadToCloudWatch\":\"true\"},\"componentLogsConfigurationMap\":{\"com.example.MyPrivateDockerComponent\":{}}}}"
       }
     },
     "aws.greengrass.ShadowManager": {
