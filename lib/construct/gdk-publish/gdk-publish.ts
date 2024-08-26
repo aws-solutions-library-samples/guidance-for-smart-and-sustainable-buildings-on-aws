@@ -21,6 +21,7 @@ import {
 import { PolicyStatement, Effect, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 import { GdkBucket } from "./gdk-bucket";
 import { GdkConfig } from "./gdk-config";
+const sanitizeFilename = require("sanitize-filename");
 
 export type ResourceProperties = {
   sourceBucketName: string;
@@ -78,16 +79,24 @@ export class GdkPublish extends Construct {
     const exclude = props.asset.exclude
       ? [...props.asset.exclude, ...gdkExclude]
       : gdkExclude;
+
+    // Sanitize the file name part of the path
+    const sanitizedFileName = sanitizeFilename(path.basename(props.asset.path));
+    // Combine the directory path with the sanitized file name
+    const safeAssetPath = path.join(
+      path.dirname(props.asset.path),
+      sanitizedFileName,
+    );
+    const safeGdkConfigPath = path.join(safeAssetPath, "gdk-config.json");
+
     const componentBucket =
       props.componentBucket ??
       new GdkBucket(this, "ComponentBucket", {
-        gdkConfigPath: path.join(props.asset.path, "gdk-config.json"),
+        gdkConfigPath: safeGdkConfigPath,
         autoDeleteObjects: true,
         removalPolicy: RemovalPolicy.DESTROY,
       });
-    const config = new GdkConfig(
-      path.join(props.asset.path, "gdk-config.json"),
-    );
+    const config = new GdkConfig(safeGdkConfigPath);
 
     const handler = new SingletonFunction(this, "CustomResourceHandler", {
       // Use raw string to avoid from tightening CDK version requirement
@@ -265,6 +274,7 @@ EOF
       `Source-${props.asset.path.replace("/", "")}`,
       {
         ...props.asset,
+        path: safeAssetPath,
         exclude: exclude,
       },
     );
@@ -278,7 +288,7 @@ EOF
       sourceBucketName: asset.s3BucketName,
       sourceObjectKey: asset.s3ObjectKey,
       codeBuildProjectName: project.projectName,
-      extractPath: path.basename(props.asset.path),
+      extractPath: sanitizedFileName,
       componentName: config.componentName,
       environment: props.buildEnvironment,
     };

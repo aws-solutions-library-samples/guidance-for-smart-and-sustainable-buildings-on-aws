@@ -3,6 +3,7 @@ import * as s3 from "aws-cdk-lib/aws-s3";
 import * as path from "path";
 import { GdkConfig } from "./gdk-config";
 import { Stack } from "aws-cdk-lib";
+const sanitizeFilename = require("sanitize-filename");
 
 export interface GdkBucketProps extends s3.BucketProps {
   /**
@@ -13,7 +14,17 @@ export interface GdkBucketProps extends s3.BucketProps {
 
 export class GdkBucket extends s3.Bucket {
   constructor(scope: Construct, id: string, props: GdkBucketProps) {
-    const config = new GdkConfig(path.join(props.gdkConfigPath));
+    // Sanitize the file name part of the path
+    const sanitizedFileName = sanitizeFilename(
+      path.basename(props.gdkConfigPath),
+    );
+    // Combine the directory path with the sanitized file name
+    const safeGdkConfigPath = path.join(
+      path.dirname(props.gdkConfigPath),
+      sanitizedFileName,
+    );
+
+    const config = new GdkConfig(safeGdkConfigPath);
 
     // GDK tries to generate S3 bucket according to bucket name on `gdk-config.json` if not exists.
     // The bucket should be under the control of CDK, so declare bucket here.
