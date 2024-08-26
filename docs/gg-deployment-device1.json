@@ -11,24 +11,24 @@
         "merge": "{\"interpolateComponentConfiguration\": true}"
       }
     },
-    "aws.greengrass.LogManager": {
-      "componentVersion": "2.3.1",
-      "configurationUpdate": {
-          "merge": "{\"logsUploaderConfiguration\":{\"systemLogsConfiguration\":{\"uploadToCloudWatch\":\"true\"},\"componentLogsConfigurationMap\":{\"com.example.MyPrivateDockerComponent\":{}}}}"
-      }
-    },
     "aws.greengrass.ShadowManager": {
       "componentVersion": "2.3.8",
       "configurationUpdate": {
         "merge": "{\"strategy\": {\"type\": \"realTime\"},\"synchronize\": {\"coreThing\": {\"classic\": true, \"namedShadows\": [\"ventilation\"]},\"direction\": \"betweenDeviceAndCloud\"}}"
       }
     },
+    "aws.greengrass.LogManager": {
+      "componentVersion": "2.3.7",
+      "configurationUpdate": {
+          "merge": "{\"logsUploaderConfiguration\":{\"systemLogsConfiguration\":{\"uploadToCloudWatch\":\"true\"},\"componentLogsConfigurationMap\":{\"collectSensorData\":{}, \"automateVentilation\":{}}}}"
+      }
+    },
     "collectSensorData": {
-      "componentVersion": "1.0.81",
+      "componentVersion": "1.0.82",
       "runWith": {}
     },
     "automateVentilation": {
-      "componentVersion": "1.0.48",
+      "componentVersion": "1.0.49",
       "runWith": {}
     }
   },
