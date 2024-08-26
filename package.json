@@ -29,6 +29,7 @@
     "constructs": "^10.3.0",
     "npm-check-updates": "^17.0.6",
     "prettier": "^3.3.3",
+    "sanitize-filename": "^1.6.3",
     "source-map-support": "^0.5.21"
   }
 }
