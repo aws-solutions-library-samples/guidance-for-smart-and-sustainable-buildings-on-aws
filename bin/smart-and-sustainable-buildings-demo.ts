@@ -178,4 +178,13 @@ function addNagSuppressionsForStacks(
       ],
     },
   ]);
+  NagSuppressions.addStackSuppressions(sustainableBuildingStack, [
+    {
+      id: "AwsSolutions-IAM4",
+      reason: "Reviewed and decided to use managed policy.",
+      appliesTo: [
+        "Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSIoTDeviceDefenderAudit",
+      ],
+    },
+  ]);
 }

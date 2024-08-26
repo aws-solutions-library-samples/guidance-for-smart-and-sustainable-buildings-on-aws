@@ -188,5 +188,99 @@ export class SensorDataCollection extends Construct {
       ),
       actions: [new iotactions.LambdaFunctionAction(updateDeviceShadowLambda)],
     });
+
+    const iotDeviceDefenderAuditRole = new iam.Role(
+      this,
+      "IotDeviceDefenderAuditRole",
+      {
+        roleName: "iotDeviceDefenderAuditRole",
+        assumedBy: new iam.ServicePrincipal("iot.amazonaws.com"),
+        managedPolicies: [
+          iam.ManagedPolicy.fromAwsManagedPolicyName(
+            "service-role/AWSIoTDeviceDefenderAudit",
+          ),
+        ],
+      },
+    );
+
+    const accountAuditConfiguration =
+      new cdk.aws_iot.CfnAccountAuditConfiguration(
+        this,
+        "AccountAuditConfiguration",
+        {
+          accountId: cdk.Stack.of(this).account,
+          auditCheckConfigurations: {
+            authenticatedCognitoRoleOverlyPermissiveCheck: {
+              enabled: true,
+            },
+            caCertificateExpiringCheck: {
+              enabled: true,
+            },
+            caCertificateKeyQualityCheck: {
+              enabled: true,
+            },
+            conflictingClientIdsCheck: {
+              enabled: true,
+            },
+            deviceCertificateExpiringCheck: {
+              enabled: true,
+            },
+            deviceCertificateKeyQualityCheck: {
+              enabled: true,
+            },
+            deviceCertificateSharedCheck: {
+              enabled: true,
+            },
+            iotPolicyOverlyPermissiveCheck: {
+              enabled: true,
+            },
+            iotRoleAliasAllowsAccessToUnusedServicesCheck: {
+              enabled: true,
+            },
+            iotRoleAliasOverlyPermissiveCheck: {
+              enabled: true,
+            },
+            loggingDisabledCheck: {
+              enabled: true,
+            },
+            revokedCaCertificateStillActiveCheck: {
+              enabled: true,
+            },
+            revokedDeviceCertificateStillActiveCheck: {
+              enabled: true,
+            },
+            unauthenticatedCognitoRoleOverlyPermissiveCheck: {
+              enabled: true,
+            },
+          },
+          roleArn: iotDeviceDefenderAuditRole.roleArn,
+        },
+      );
+
+    const scheduledAudit = new cdk.aws_iot.CfnScheduledAudit(
+      this,
+      "DailyScheduledAudit",
+      {
+        scheduledAuditName: "DailyScheduledAudit",
+        frequency: "DAILY",
+        targetCheckNames: [
+          "AUTHENTICATED_COGNITO_ROLE_OVERLY_PERMISSIVE_CHECK",
+          "CA_CERTIFICATE_EXPIRING_CHECK",
+          "CA_CERTIFICATE_KEY_QUALITY_CHECK",
+          "CONFLICTING_CLIENT_IDS_CHECK",
+          "DEVICE_CERTIFICATE_EXPIRING_CHECK",
+          "DEVICE_CERTIFICATE_KEY_QUALITY_CHECK",
+          "DEVICE_CERTIFICATE_SHARED_CHECK",
+          "IOT_POLICY_OVERLY_PERMISSIVE_CHECK",
+          "IOT_ROLE_ALIAS_ALLOWS_ACCESS_TO_UNUSED_SERVICES_CHECK",
+          "IOT_ROLE_ALIAS_OVERLY_PERMISSIVE_CHECK",
+          "LOGGING_DISABLED_CHECK",
+          "REVOKED_CA_CERTIFICATE_STILL_ACTIVE_CHECK",
+          "REVOKED_DEVICE_CERTIFICATE_STILL_ACTIVE_CHECK",
+          "UNAUTHENTICATED_COGNITO_ROLE_OVERLY_PERMISSIVE_CHECK",
+        ],
+      },
+    );
+    scheduledAudit.addDependency(accountAuditConfiguration);
   }
 }
