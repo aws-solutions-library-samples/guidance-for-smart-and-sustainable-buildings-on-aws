@@ -432,3 +432,4 @@ _お客様は、本ガイダンスの情報を独自に評価する責任があ�
 - ブログ投稿：[サステナビリティを意識したミニチュア倉庫のデモを作ってみた !](https://aws.amazon.com/jp/builders-flash/202310/sustainability-factory-demo/)
 
 ## 著者
+本プロジェクトは [佐藤 賢太](https://www.linkedin.com/in/kenta-sato/) にて開発、メンテナンスしています。

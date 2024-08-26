@@ -436,3 +436,4 @@ _Customers are responsible for making their own independent assessment of the in
 - Blog post: [サステナビリティを意識したミニチュア倉庫のデモを作ってみた !](https://aws.amazon.com/jp/builders-flash/202310/sustainability-factory-demo/)
 
 ## Authors
+This project is built and maintained by [Kenta Sato](https://www.linkedin.com/in/kenta-sato/).
