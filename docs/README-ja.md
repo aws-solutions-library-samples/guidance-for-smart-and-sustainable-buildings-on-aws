@@ -120,7 +120,7 @@ smart-and-sustainable-buildings/
 │   │   ├── gdk-publish (Greengrass Development Kit関連コンストラクト)
 │   │   ├── datastore.ts (Timestream)
 │   │   ├── greengrass-bootstrap.ts (Greengrassのブートストラップ)
-│   │   ├── iot.ts (AWS IoT CoreルールとLambda)
+│   │   ├── iot.ts (AWS IoT CoreルールとAWS Lambda)
 │   │   ├── power-data-collection.ts (エネルギー使用量の収集)
 │   │   └── weather-data-collection.ts (気象データの収集)
 │   ├── gg_components (AWS IoT Greengrassコンポーネント)
@@ -129,17 +129,17 @@ smart-and-sustainable-buildings/
 │   ├── grafana (Grafanaダッシュボード)
 │   │   └── dashboard.json (Grafanaダッシュボードテンプレート)
 │   ├── lambda (Lambda関数アセット)
-│   │   ├── external-data-collection (外部サービスからデータを収集するLambda関数)
-│   │   ├── gdk-publish (Greengrass Development Kitを公開するLambda)
-│   │   ├── iot (IoTデータを処理するLambda)
-│   │   └── layer (Lambdaレイヤー)
+│   │   ├── external-data-collection (外部サービスからデータを収集するAWS Lambda関数)
+│   │   ├── gdk-publish (Greengrass Development Kitを公開するAWS Lambda)
+│   │   ├── iot (IoTデータを処理するAWS Lambda)
+│   │   └── layer (AWS Lambdaレイヤー)
 │   ├── data-collection.ts (バックエンドリソースをデプロイするスタック)
 │   └── greengrass-stack.ts (AWS IoT Greengrassコンポーネントを公開するスタック)
 ├── test (テスト: 未実装)
 ├── tools
-│   ├── dynamodb (デバイス情報をDynamoDBに登録するスクリプト)
+│   ├── dynamodb (デバイス情報を Amazon DynamoDBに登録するスクリプト)
 │   ├── lambda (Lamdbaレイヤーパッケージをインストールするスクリプト)
-│   └── secrets-manager (シークレットをSecret Managerに登録するスクリプト)
+│   └── secrets-manager (シークレットを Secrets Managerに登録するスクリプト)
 ├── .gitignore
 ├── .npmignore
 ├── LICENSE
@@ -262,14 +262,14 @@ cdk bootstrap
 
 このガイダンスのサンプルコードをデプロイするには6つの手順があります：
 
-[1. Lambda層のPython依存関係をインストールする](#1-lambda層のpython依存関係をインストールする)
+[1. AWS Lambda レイヤーPython依存関係をインストールする](#1-aws-lambda-レイヤーのpython依存関係をインストールする)
 [2. AWS CDKでインフラストラクチャをデプロイする](#2-aws-cdkでインフラストラクチャをデプロイする)
-[3. デバイス情報をDynamoDBに登録する](#3-デバイス情報をdynamodbに登録する)
-[4. シークレットをAWS Secret Managerに登録する](#4-シークレットをaws-secret-managerに登録する)
+[3. デバイス情報をAmazon DynamoDBに登録する](#3-デバイス情報をdynamodbに登録する)
+[4. シークレットをAWS Secrets Managerに登録する](#4-シークレットをaws-secret-managerに登録する)
 [5. デバイスを設定する](#5-デバイスを設定する)
 [6. Amazon Managed Grafanaダッシュボードをセットアップする](#6-amazon-managed-grafanaダッシュボードをセットアップする)
 
-### 1. Lambda層のPython依存関係をインストールする
+### 1. AWS Lambda レイヤーのPython依存関係をインストールする
 
 ```bash
 pip install -t lib/lambda/layer/open-weather-map/python -r lib/lambda/layer/open-weather-map/requirements.txt

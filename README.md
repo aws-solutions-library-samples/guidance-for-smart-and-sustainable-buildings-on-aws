@@ -24,7 +24,7 @@
 
 ## Overview
 
-This is an example implementation of [Guidance for Smart and Sustainable Buildings on AWS](https://aws.amazon.com/solutions/guidance/smart-and-sustainable-buildings-on-aws/?did=sl_card&trk=sl_card) to demonstrate how to collect, visualize buildings data to gain insight and automate operation to optimize energy usage, cost and associated Greenhouse Gas (GHG) emissions.
+This is an example implementation of [Guidance for Smart and Sustainable Buildings on AWS](https://aws.amazon.com/solutions/guidance/smart-and-sustainable-buildings-on-aws/?did=sl_card&trk=sl_card) to demonstrate how to collect and visualize buildings data to gain insight and automate operation to optimize energy usage, cost, and associated Greenhouse Gas (GHG) emissions.
 
 This guidance uses the [AWS Cloud Development Kit (AWS CDK)](https://aws.amazon.com/cdk/) to deploy infrastructure assets and [AWS IoT Greengrass](https://aws.amazon.com/jp/greengrass/) to deploy component to edge devices.
 
@@ -32,11 +32,11 @@ This guidance uses the [AWS Cloud Development Kit (AWS CDK)](https://aws.amazon.
 
 ![architecture](/imgs/architecture.png)
 
-1. In this sample scenario, we have two buildings with heater and ventilation system. The aim is to keep the building at desired temperature and air quality while optimizing energy usage.
-2. Install plug-in sensor to measure the energy used by the heater which stores data in external service which is accesible via API.
-3. Install edge IoT device with [AWS IoT Greengrass](https://aws.amazon.com/jp/greengrass/) components. One component collects temperature and CO2 ppm sensor data and sends to [AWS IoT Core](https://aws.amazon.com/jp/iot-core/), and the other component ventilate building automatically by monitoring IoT Things Device Shadow to indicate the neccesity of ventilation due to CO2 ppm is high.
-4. AWS IoT Core collects the sensor data which routes to [AWS Lambda](https://aws.amazon.com/lambda/?nc1=h_ls) then stores in [Amazon Timestream](https://aws.amazon.com/timestream/?nc1=h_ls) for real time data analytics.
-5. [Amazon EventBridge](https://aws.amazon.com/jp/eventbridge/) triggers AWS Lambda at regular interval to collect data from external service, such as energy usage and weather data service.
+1. In this sample scenario, we have two buildings with a heater and ventilation system. The aim is to keep the building at a desired temperature and air quality while optimizing energy usage.
+2. Install plug-in sensor to measure the energy usage of the heater and store data in an external service accesible via API.
+3. Install edge IoT device with [AWS IoT Greengrass](https://aws.amazon.com/jp/greengrass/) components. One component collects temperature and CO2 ppm sensor data and sends to [AWS IoT Core](https://aws.amazon.com/jp/iot-core/), and the other component ventilates the building automatically by monitoring the IoT Things Device Shadow that indicates if the CO2 ppm is too high.
+4. AWS IoT Core collects the sensor data and routes it to [AWS Lambda](https://aws.amazon.com/lambda/?nc1=h_ls) for storage in [Amazon Timestream](https://aws.amazon.com/timestream/?nc1=h_ls) for real-time data analytics.
+5. [Amazon EventBridge](https://aws.amazon.com/jp/eventbridge/) triggers AWS Lambda at regular intervals to collect data from external services, such as energy usage and weather data service.
 6. [Amazon Managed Grafana](https://aws.amazon.com/jp/grafana/) connects to Amazon Timestream to visualize data in real-time.
 
 ![dashboard](/imgs/dashboard.png)
@@ -47,7 +47,7 @@ This guidance uses the [AWS Cloud Development Kit (AWS CDK)](https://aws.amazon.
 
 You are responsible for the cost of AWS services used while running this Guidance sample code.
 
-Note: Actual costs may vary based on factors such as the number of devices, Amazon Managed Grafana users, and frequency of Amazon Timestream queries
+Note: Actual costs may vary based on factors such as the number of devices, Amazon Managed Grafana users, and frequency of Amazon Timestream queries.
 
 #### Example 1: 2 devices
 
@@ -119,7 +119,7 @@ smart-and-sustainable-buildings/
 ├── imgs (Images such as screenshots)
 ├── lib
 │   ├── construct (CDK Constructs)
-│   │   ├── gdk-publish (Greengrass Development Kit related consutructs)
+│   │   ├── gdk-publish (Greengrass Development Kit related constructs)
 │   │   ├── datastore.ts (Timestream)
 │   │   ├── greengrass-bootstrap.ts (Bootstrapping Greengrass)
 │   │   ├── iot.ts (AWS IoT Core Rule and related Lambda)
@@ -139,9 +139,9 @@ smart-and-sustainable-buildings/
 │   └── greengrass-stack.ts (Stack for publishing AWS IoT Greengrass Component)
 ├── test (Test: not implemented)
 ├── tools
-│   ├── dynamodb (Script to register device info to DynamoDB)
-│   ├── lambda (Script to install Lamdba Layer packages)
-│   └── secrets-manager (Script to register secrets to Secret Manager)
+│   ├── dynamodb (Script to register device info to Amazon DynamoDB)
+│   ├── lambda (Script to install AWS Lamdba Layer packages)
+│   └── secrets-manager (Script to register secrets to Secrets Manager)
 ├── .gitignore
 ├── .npmignore
 ├── LICENSE
@@ -153,15 +153,15 @@ smart-and-sustainable-buildings/
 └── tsconfig.json (TypeScript configuration)
 ```
 
-## Prerequisite
+## Prerequisites
 
 #### Operating System
 
 These deployment instructions are intended for use on MacOS. Deployment using a different operating system may require additional steps.
 
-### Third-Party tools
+### Third-Party Tools
 
-This project utilizes external APIs (such as OpenWeatherMap, SwitchBot, etc.) and hardware devides. When using these services, please adhere to their respective terms of service. This project is not responsible for any issues arising from the use of these external services.
+This project utilizes external APIs (e.g., OpenWeatherMap, SwitchBot, etc.) and hardware devices. When using these services, please adhere to their respective terms of service. This project is not responsible for any issues arising from the use of these external services.
 
 #### Software
 
@@ -174,8 +174,8 @@ The following packages will need to be installed on your environment to deploy a
 
 #### Hardware
 
-You need following hardware or equivalent alternative to run enjoy the full asset in this repository.
-If you want to use different option, additional or modification of steps may be required.
+You need the following hardware - or equivalent alternative - to enjoy the full set of capabilities in this repository.
+If you want to use different hardware, additional or modification of steps may be required.
 
 - IoT device of your choice ([Raspberry Pi 4 Model B](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/))
 - Temperature sensor ([BME280](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/))
@@ -236,7 +236,7 @@ export AWS_SESSION_TOKEN=<insert session token>
 
 **4. Set AWS Region to deploy resources**
 
-- Set your AWS Region to deploy resources by command below. Below example sets AWS Region to Oregon (us-west-2)
+- Set your AWS Region to deploy resources using the command below. This example sets AWS Region to Oregon (us-west-2)
 
 ```bash
 export AWS_REGION=us-west-2
@@ -263,14 +263,14 @@ cdk bootstrap
 
 There are 6 steps to deploy the sample code for the guidance:
 
-[1. Install Python dependencies for the Lambda layers](#1-install-python-dependencies-for-the-lambda-layers)
+[1. Install Python dependencies for the AWS Lambda layers](#1-install-python-dependencies-for-the-aws-lambda-layers)
 [2. Deploy the infrastructure with AWS CDK](#2-deploy-the-infrastructure-with-aws-cdk)
-[3. Register device information into DynamoDB](#3-register-device-information-into-dynamodb)
+[3. Register device information into Amazon DynamoDB](#3-register-device-information-into-amazon-dynamodb)
 [4. Register secrets into AWS Secret Manager](#4-register-secrets-into-aws-secret-manager)
 [5. Configure device](#5-configure-device)
 [6. Setup Amazon Managed Grafana Dashboard](#6-setup-amazon-managed-grafana-dashboard)
 
-### 1. Install Python dependencies for the Lambda Layers
+### 1. Install Python dependencies for the AWS Lambda Layers
 
 ```bash
 pip install -t lib/lambda/layer/open-weather-map/python -r lib/lambda/layer/open-weather-map/requirements.txt
@@ -297,7 +297,7 @@ Next run command below to deploy AWS resources. It may take a while.
 cdk deploy --all
 ```
 
-Note the output of the command for resource ID which you will need to subsequent steps.
+Note the output for the resource ID. You will need this in subsequent steps.
 Example output are following.
 
 ```
@@ -322,7 +322,7 @@ GreengrassStack.sensorDataCollectionComponentName = collectSensorData
 GreengrassStack.sensorDataCollectionComponentVersion = 1.0.0
 ```
 
-### 3. Register device information into DynamoDB
+### 3. Register device information into Amazon DynamoDB
 
 Run the command below after followings changes.
 
@@ -335,7 +335,7 @@ bash tools/dynamodb/add_location.sh {locationTable}
 
 ### 4. Register secrets into AWS Secret Manager
 
-Run the command below after followings changes.
+Run the command below after making the following changes.
 
 - Replace {secretid} with the output value of `ustainableBuilding.WeatherDataCollectionOpenWeatherMapApiSecretName~` after running `cdk deploy --all`.
 - Replace {apikey} with the [OpenWeather Map API Key](https://openweathermap.org/appid) obtained at [Prerequisite - Hardware](#software).
@@ -346,11 +346,11 @@ bash tools/secrets-manager/register-openweathermap-secret.sh {secretid} {apikey}
 
 ### 5. Configure device
 
-Set up AWS IoT Greengrass device by referencing [DEVICE_SETUP](/docs/DEVICE_SETUP.md).
+Set up the AWS IoT Greengrass device by referencing [DEVICE_SETUP](/docs/DEVICE_SETUP.md).
 
 ### 6. Setup Amazon Managed Grafana Dashboard
 
-If you follow previous steps, you will have data coming into Amazon Timestream.
+If you follow the previous steps, you will have data coming into Amazon Timestream.
 Let's build a Amazon Managed Grafana dashboard to visualize near realtime data stored in the Amazon Timestream database.
 
 Refer [Learn how to create and use Amazon Managed Grafana resources](https://docs.aws.amazon.com/grafana/latest/userguide/getting-started-with-AMG.html) for how to setup Amazon Managed Grafana resources.
@@ -358,7 +358,7 @@ Refer [Learn how to create and use Amazon Managed Grafana resources](https://doc
 Following is an example steps for setting up the resources and create sample dashboard.
 Run these steps after logging in [AWS Management Console](https://aws.amazon.com/jp/console/).
 
-1. Login AWS Management Console and select region which you deploy CDK resources.
+1. Log in to the AWS Management Console and select the region in which you deployed the CDK resources.
 2. Setup [IAM Identity Center](https://docs.aws.amazon.com/console/singlesignon/firstrun/getting-started) for managing users that can access to Amazon Managed Grafana.
 3. Add user to IAM Identity Center.
 4. Create [Amazon Managed Grafana Workspace](https://docs.aws.amazon.com/grafana/latest/userguide/Amazon-Managed-Grafana-setting-up.html). Following is the example configuration screenshots.
@@ -366,23 +366,23 @@ Run these steps after logging in [AWS Management Console](https://aws.amazon.com
    ![Alt text](/imgs/grafana_dashboard/image-1.png)
    ![Alt text](/imgs/grafana_dashboard/image-2.png)
 
-5. Configure Amazon Timestream as data sources.
+5. Configure Amazon Timestream as a data source.
 
 ![Alt text](/imgs/grafana_dashboard/image-3.png)
 ![Alt text](/imgs/grafana_dashboard/image-4.png)
 
-4. Add IAM Identity Center user on workspace with appropriate role (Admin, Viewer)
+4. Add an IAM Identity Center user to the workspace with appropriate role (Admin, Viewer)
 
 ![Alt text](/imgs/grafana_dashboard/image-5.png)
 ![Alt text](/imgs/grafana_dashboard/image-6.png)
 
-5. Access to Workspace URL to login with the IAM Identity Center user.
+5. Access the Workspace URL to login with the IAM Identity Center user.
 
 6. Configure Amazon Managed Grafana to set Amazon Timestream DB as data source.
    ![Alt text](/imgs/grafana_dashboard/image-7.png)
    ![Alt text](/imgs/grafana_dashboard/image-8.png)
 
-7. [Import JSON File](https://docs.aws.amazon.com/grafana/latest/userguide/dashboard-export-and-import.html) to create dashboard from the template ([EN](/lib/grafana/dashboard.json), [JP](/lib/grafana/dashboard-jp.json)).
+7. [Import JSON File](https://docs.aws.amazon.com/grafana/latest/userguide/dashboard-export-and-import.html) to create a dashboard from the template ([EN](/lib/grafana/dashboard.json), [JP](/lib/grafana/dashboard-jp.json)).
 
    ![Alt text](/imgs/grafana_dashboard/image-9.png)
 
@@ -392,31 +392,31 @@ Run these steps after logging in [AWS Management Console](https://aws.amazon.com
 
 ### Deployment Validation - IoT Data Collection
 
-- Check all the metrics such are energy usage, CO2 ppm, temperature and weather data are displayed in Amazon Managed Grafana dashboard like the screenshot below.
+- Ensure the metrics (e.g., energy usage, CO2 ppm, temperature and weather data) are in the Amazon Managed Grafana dashboard. See below:
 
 ![Alt test](/imgs/dashboard.png)
 
 ### Deployment Validation - IoT Device Shadow
 
-- Check if the [IoT Things Device Shadow](https://docs.aws.amazon.com/ja_jp/iot/latest/developerguide/iot-device-shadows.html) is updated when CO2 ppm is above the threshold (default 800 ppm) and ventilate the building door by rotating servo.
+- Ensure the [IoT Things Device Shadow](https://docs.aws.amazon.com/ja_jp/iot/latest/developerguide/iot-device-shadows.html) is updated when CO2 ppm is above the threshold (default 800 ppm) and ventilate the building door by rotating servo.
 
 ## Running the Guidance
 
-Everything should run automatically after deployment completes. You can now monitor Amazon Managed Grafana dashboard and test how smart and sustainable buildings on AWS solution can optimize energy, cost and associated GHG emission by optimizing operation.
+Everything should run automatically after the deployment completes. You can now monitor the Amazon Managed Grafana dashboard and see how smart and sustainable buildings on AWS solution can optimize energy, cost and associated GHG emission by optimizing operation.
 
 ## Next Steps
 
-This example implementation of the guidance provides a base for collecting, visualizing and automate operation to gain insights to optimize energy usage from multiple buildings. You can modify this sample to be tailered to your environment. This may include the following:
+This example implementation of the guidance provides a base for collecting, visualizing and automate operation to gain insights to optimize energy usage from multiple buildings. You can modify this sample to be tailored to your environment. This may include the following:
 
-- Customize and increase edge devices and components to collect from other sources such as Building Management System, smart meter etc.
-- Use Amazon Athena and Amazon QuickSight to perform historical data analysis and create reportings.
-- Create digital twin with AWS IoT TwinMaker to visualize and monitor physical asset status.
+- Customize and increase edge devices and components to collect from other sources such as Building Management Systems, smart meters, etc.
+- Use Amazon Athena and Amazon QuickSight to perform historical data analysis and create reports.
+- Create digital twins with AWS IoT TwinMaker to visualize and monitor physical asset status.
 
 ## Cleanup
 
 To cleanup, delete the following stacks in this order:
 
-1. Amazon Managed Grafana resources.
+1. Amazon Managed Grafana resources
 2. AWS IAM Identity Center
 3. CDK Resources
    To delete the resources created by AWS CDK, run the following command to delete stacks.
