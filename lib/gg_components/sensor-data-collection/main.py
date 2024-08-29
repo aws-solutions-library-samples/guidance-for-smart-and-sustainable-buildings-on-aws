@@ -28,12 +28,10 @@ INTERVAL = 10
 def read_co2_data():
     """Read CO2 data from the MH-Z19 sensor"""
     try:
-        # Sanitize environmental variable
-        python_command = shlex.quote(
-            os.environ.get("PYTHON_COMMAND_PATH", "/usr/bin/python3")
-        )
+        # Sanitize Python command variable
+        python_command = shlex.quote(PYTHON_COMMAND_PATH)
 
-        command = [python_command, "-m", "mh_z19"]
+        command = ["sudo", python_command, "-m", "mh_z19"]
 
         co2_data_raw = subprocess.check_output(command, shell=False)
         co2_data = json.loads(co2_data_raw.decode("utf-8"))
