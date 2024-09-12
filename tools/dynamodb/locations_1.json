@@ -1,0 +1,30 @@
+{
+  "Address": {
+    "S": "千葉県千葉市美浜区新港６８−１"
+  },
+  "Valid": {
+    "BOOL": true
+  },
+  "Location": {
+    "S": "Chiba"
+  },
+  "Lon": {
+    "S": "140.086004"
+  },
+  "Devices": {
+    "M": {
+      "Main": {
+        "S": "SensingDevice1"
+      },
+      "Power1": {
+        "S": "{SwitchBotDeviceID}"
+      }
+    }
+  },
+  "Lat": {
+    "S": "35.614379"
+  },
+  "Name": {
+    "S": "千葉みなとFC"
+  }
+}

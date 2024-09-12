@@ -1,0 +1,18 @@
+{
+  "name": "lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild index.ts --bundle --outdir=./dist --platform=node --external:@aws-sdk/*"
+  },
+  "dependencies": {
+    "@aws-sdk/client-codebuild": "^3.525.0",
+    "@aws-sdk/client-greengrassv2": "^3.525.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.95",
+    "@types/node": "^20.11.0",
+    "esbuild": "^0.14.39"
+  }
+}

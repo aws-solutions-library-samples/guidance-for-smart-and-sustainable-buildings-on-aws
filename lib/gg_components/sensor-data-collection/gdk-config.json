@@ -1,0 +1,16 @@
+{
+  "component": {
+    "collectSensorData": {
+      "author": "aws",
+      "version": "NEXT_PATCH",
+      "build": {
+        "build_system": "zip"
+      },
+      "publish": {
+        "bucket": "gdk-components",
+        "region": "{aws_region}"
+      }
+    }
+  },
+  "gdk_version": "1.6.2"
+}

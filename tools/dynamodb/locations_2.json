@@ -1,0 +1,33 @@
+{
+  "Address": {
+    "S": "東京都青梅市末広町２丁目９−１４"
+  },
+  "Valid": {
+    "BOOL": false
+  },
+  "Location": {
+    "S": "Tokyo"
+  },
+  "Lon": {
+    "S": "139.30829987791057"
+  },
+  "Devices": {
+    "M": {
+      "Main": {
+        "S": "SensingDevice2"
+      },
+      "Power1": {
+        "S": "{SwitchBotDeviceID}"
+      },
+      "Power2": {
+        "S": "{SwitchBotDeviceID}"
+      }
+    }
+  },
+  "Lat": {
+    "S": "35.77981034784683"
+  },
+  "Name": {
+    "S": "青梅FC"
+  }
+}

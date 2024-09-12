@@ -1,0 +1,38 @@
+---
+RecipeFormatVersion: "2020-01-25"
+ComponentName: "{COMPONENT_NAME}"
+ComponentVersion: "{COMPONENT_VERSION}"
+ComponentDescription: "This is Python component to send sensor data to IoT Core."
+ComponentPublisher: "{COMPONENT_AUTHOR}"
+ComponentConfiguration:
+  DefaultConfiguration:
+  # https://docs.aws.amazon.com/ja_jp/greengrass/v2/developerguide/interprocess-communication.html
+    accessControl:
+      aws.greengrass.ipc.mqttproxy:
+        "{COMPONENT_NAME}:mqttproxy:1":
+          policyDescription: "Allows access to publish to sensor topic."
+          operations:
+            - aws.greengrass#PublishToIoTCore
+          resources: 
+            - "sensor/{iot:thingName}"
+Manifests:
+  - Platform:
+      os: all
+    Artifacts:
+      - URI: "s3://{BUCKET_NAME}/{COMPONENT_NAME}/{COMPONENT_VERSION}/sensor-data-collection.zip"
+        Unarchive: ZIP
+    Lifecycle:
+      install:
+        Script: |-
+          python3 -m venv {artifacts:decompressedPath}/sensor-data-collection/env
+          . {artifacts:decompressedPath}/sensor-data-collection/env/bin/activate
+          pip install -r {artifacts:decompressedPath}/sensor-data-collection/requirements.txt
+        RequiresPrivilege: true
+      run:
+        Script: |-
+          . {artifacts:decompressedPath}/sensor-data-collection/env/bin/activate
+          python3 -u {artifacts:decompressedPath}/sensor-data-collection/main.py
+        RequiresPrivilege: true
+      Setenv:
+        PYTHON_VENV_PATH: "{artifacts:decompressedPath}/sensor-data-collection/env"
+
