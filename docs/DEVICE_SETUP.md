@@ -93,7 +93,7 @@ sudo apt-get install i2c-tools
 i2cdetect -y 1
 ```
 
-- Connection is normal if `77` is displayed like below.
+- Connection is normal if `76` is displayed like below.
 
 ```
      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
@@ -104,7 +104,7 @@ i2cdetect -y 1
 40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-70: -- -- -- -- -- -- -- 76
+70: -- -- -- -- -- -- 76 --
 ```
 
 ### Configure CO2 sensor (MH_Z19B)
