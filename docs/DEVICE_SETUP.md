@@ -259,7 +259,7 @@ sudo tail -f /greengrass/v2/logs/greengrass.log
 ```
 
 ```bash
-sudo tail -f /greengrass/v2/logs/collectSensorDatao.log
+sudo tail -f /greengrass/v2/logs/collectSensorData.log
 ```
 
 ```bash
