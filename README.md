@@ -137,7 +137,6 @@ smart-and-sustainable-buildings/
 │   │   └── layer (Lambda Layer)
 │   ├── data-collection.ts (Stack for deploying backend resources)
 │   └── greengrass-stack.ts (Stack for publishing AWS IoT Greengrass Component)
-├── test (Test: not implemented)
 ├── tools
 │   ├── dynamodb (Script to register device info to Amazon DynamoDB)
 │   ├── lambda (Script to install AWS Lamdba Layer packages)

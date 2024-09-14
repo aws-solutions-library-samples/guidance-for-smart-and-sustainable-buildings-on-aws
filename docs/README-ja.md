@@ -135,7 +135,6 @@ smart-and-sustainable-buildings/
 │   │   └── layer (AWS Lambdaレイヤー)
 │   ├── data-collection.ts (バックエンドリソースをデプロイするスタック)
 │   └── greengrass-stack.ts (AWS IoT Greengrassコンポーネントを公開するスタック)
-├── test (テスト: 未実装)
 ├── tools
 │   ├── dynamodb (デバイス情報を Amazon DynamoDBに登録するスクリプト)
 │   ├── lambda (Lamdbaレイヤーパッケージをインストールするスクリプト)
