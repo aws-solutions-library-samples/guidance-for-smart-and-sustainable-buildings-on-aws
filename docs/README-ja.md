@@ -137,7 +137,6 @@ smart-and-sustainable-buildings/
 │   └── greengrass-stack.ts (AWS IoT Greengrassコンポーネントを公開するスタック)
 ├── tools
 │   ├── dynamodb (デバイス情報を Amazon DynamoDBに登録するスクリプト)
-│   ├── lambda (Lamdbaレイヤーパッケージをインストールするスクリプト)
 │   └── secrets-manager (シークレットを Secrets Managerに登録するスクリプト)
 ├── .gitignore
 ├── .npmignore
@@ -359,29 +358,42 @@ Amazon Managed Grafanaリソースの作成と使用方法については、[Ama
 2. Amazon Managed Grafanaにアクセスできるユーザーを管理するために[IAM Identity Center](https://docs.aws.amazon.com/console/singlesignon/firstrun/getting-started)をセットアップします。
 3. IAM Identity Centerにユーザーを追加します。
 4. [Amazon Managed Grafanaワークスペース](https://docs.aws.amazon.com/grafana/latest/userguide/Amazon-Managed-Grafana-setting-up.html)を作成します。以下は設定例のスクリーンショットです。
+   Grafana のバージョンを10.4に設定します。
    ![Alt text](/imgs/grafana_dashboard/image.png)
+   IAM Identity Center を認証方法として有効化します。
    ![Alt text](/imgs/grafana_dashboard/image-1.png)
+   「Turn plugin management」を有効化します。
    ![Alt text](/imgs/grafana_dashboard/image-2.png)
 
 5. Amazon Timestreamをデータソースとして設定します。
 
-![Alt text](/imgs/grafana_dashboard/image-3.png)
-![Alt text](/imgs/grafana_dashboard/image-4.png)
+   ![Alt text](/imgs/grafana_dashboard/image-3.png)
+   ![Alt text](/imgs/grafana_dashboard/image-4.png)
 
 4. ワークスペースに適切な役割（Admin、Viewer）でIAM Identity Centerユーザーを追加します。
-
-![Alt text](/imgs/grafana_dashboard/image-5.png)
-![Alt text](/imgs/grafana_dashboard/image-6.png)
+   「Assign new user or group」をクリックします。
+   ![Alt text](/imgs/grafana_dashboard/image-5.png)
+   ![Alt text](/imgs/grafana_dashboard/image-6.png)
 
 5. ワークスペースURLにIAM Identity Centerユーザーでログインします。
 
 6. Amazon Managed GrafanaでAmazon Timestream DBをデータソースとして設定します。
+   サイドバーから Apps -> AWS Data Sources -> Data sources を開きます。
    ![Alt text](/imgs/grafana_dashboard/image-7.png)
+   AWS services タブで Timestream の「Install now」をクリックします。
    ![Alt text](/imgs/grafana_dashboard/image-8.png)
+   右上の「Install [version]」をクリックします。
+   ![Alt text](/imgs/grafana_dashboard/image-9.png)
+   右上の「Add new data source」をクリックします。
+   ![Alt text](/imgs/grafana_dashboard/image-10.png)
+   デフォルトのリージョンを設定し、「Save & Test」をクリックします。
+   ![Alt text](/imgs/grafana_dashboard/image-11.png)
 
 7. テンプレート([EN](/lib/grafana/dashboard.json), [JP](/lib/grafana/dashboard-jp.json)) からダッシュボードを作成するために[JSONファイルをインポート](https://docs.aws.amazon.com/grafana/latest/userguide/dashboard-export-and-import.html)します。
 
-![Alt test](/imgs/dashboard.png)
+   ![Alt text](/imgs/grafana_dashboard/image-12.png)
+   以下のようなダッシュボードが表示されることを確認します。
+   ![Alt test](/imgs/dashboard.png)
 
 ## デプロイの検証
 
