@@ -195,12 +195,13 @@ sudo apt install default-jdk
 java -version
 ```
 
-3. Configure AWS IAM credentials.
+3. Configure AWS IAM credentials and default region.
 
 ```bash
 export AWS_ACCESS_KEY_ID=<insert your access key>
 export AWS_SECRET_ACCESS_KEY=<insert secret access key>
 export AWS_SESSION_TOKEN=<insert session token>
+export AWS_REGION=<insert region>
 ```
 
 4. Install Greengrass Core component.

@@ -198,12 +198,13 @@ sudo apt install default-jdk
 java -version
 ```
 
-3. AWS IAM認証情報を設定します。
+3. AWS IAM認証情報と AWS リージョンを設定します。
 
 ```bash
 export AWS_ACCESS_KEY_ID=<insert your access key>
 export AWS_SECRET_ACCESS_KEY=<insert secret access key>
 export AWS_SESSION_TOKEN=<insert session token>
+export AWS_REGION=<insert region>
 ```
 
 4. Greengrass Coreコンポーネントをインストールします。
