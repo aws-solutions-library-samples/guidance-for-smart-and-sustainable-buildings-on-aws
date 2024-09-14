@@ -137,10 +137,8 @@ smart-and-sustainable-buildings/
 │   │   └── layer (Lambda Layer)
 │   ├── data-collection.ts (Stack for deploying backend resources)
 │   └── greengrass-stack.ts (Stack for publishing AWS IoT Greengrass Component)
-├── test (Test: not implemented)
 ├── tools
 │   ├── dynamodb (Script to register device info to Amazon DynamoDB)
-│   ├── lambda (Script to install AWS Lamdba Layer packages)
 │   └── secrets-manager (Script to register secrets to Secrets Manager)
 ├── .gitignore
 ├── .npmignore
@@ -362,31 +360,47 @@ Run these steps after logging in [AWS Management Console](https://aws.amazon.com
 2. Setup [IAM Identity Center](https://docs.aws.amazon.com/console/singlesignon/firstrun/getting-started) for managing users that can access to Amazon Managed Grafana.
 3. Add user to IAM Identity Center.
 4. Create [Amazon Managed Grafana Workspace](https://docs.aws.amazon.com/grafana/latest/userguide/Amazon-Managed-Grafana-setting-up.html). Following is the example configuration screenshots.
+
+   Configure Grafana version to 10.4.
    ![Alt text](/imgs/grafana_dashboard/image.png)
+   Enable AWS IAM Identity Center as authentication method
    ![Alt text](/imgs/grafana_dashboard/image-1.png)
+
+   Check "Turn plugin management"
    ![Alt text](/imgs/grafana_dashboard/image-2.png)
 
 5. Configure Amazon Timestream as a data source.
 
-![Alt text](/imgs/grafana_dashboard/image-3.png)
-![Alt text](/imgs/grafana_dashboard/image-4.png)
+   ![Alt text](/imgs/grafana_dashboard/image-3.png)
+   ![Alt text](/imgs/grafana_dashboard/image-4.png)
 
 4. Add an IAM Identity Center user to the workspace with appropriate role (Admin, Viewer)
-
-![Alt text](/imgs/grafana_dashboard/image-5.png)
-![Alt text](/imgs/grafana_dashboard/image-6.png)
+   Click "Assign new user or group"
+   ![Alt text](/imgs/grafana_dashboard/image-5.png)
+   ![Alt text](/imgs/grafana_dashboard/image-6.png)
 
 5. Access the Workspace URL to login with the IAM Identity Center user.
 
 6. Configure Amazon Managed Grafana to set Amazon Timestream DB as data source.
+   From side bar, go to Apps -> AWS Data Sources -> Data sources 
+
    ![Alt text](/imgs/grafana_dashboard/image-7.png)
+   In AWS services tab, click "Install now" on Timestream.
+
    ![Alt text](/imgs/grafana_dashboard/image-8.png)
-
-7. [Import JSON File](https://docs.aws.amazon.com/grafana/latest/userguide/dashboard-export-and-import.html) to create a dashboard from the template ([EN](/lib/grafana/dashboard.json), [JP](/lib/grafana/dashboard-jp.json)).
-
+   Click Install [version] button in upper right corner.
    ![Alt text](/imgs/grafana_dashboard/image-9.png)
 
-![Alt test](/imgs/dashboard.png)
+   Click Add new data source on upper right corner. 
+   ![Alt text](/imgs/grafana_dashboard/image-10.png)
+   Configure Default Region and click Save & Test. 
+   ![Alt text](/imgs/grafana_dashboard/image-11.png)
+7. [Import JSON File](https://docs.aws.amazon.com/grafana/latest/userguide/dashboard-export-and-import.html) to create a dashboard from the template ([EN](/lib/grafana/dashboard.json), [JP](/lib/grafana/dashboard-jp.json)).
+
+   ![Alt text](/imgs/grafana_dashboard/image-12.png)
+
+   You should see dashboard similar to below image.
+   ![Alt test](/imgs/dashboard.png)
 
 ## Deployment Validation
 

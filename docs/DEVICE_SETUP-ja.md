@@ -53,7 +53,7 @@ GPIO26 (37) (38) GPIO20
 
 ### 温度・湿度・気圧センサー（BME280）の設定
 
-1. 温度・湿度・気圧センサー（[BME280](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/））をRaspberry Piのピンに接続します。
+1. 温度・湿度・気圧センサー ([BME280](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/)) をRaspberry Piのピンに接続します。
 
 ```
 センサ側        Raspberry Pi 4 Model（括弧内はピンレイアウト番号）
@@ -96,7 +96,7 @@ sudo apt-get install i2c-tools
 i2cdetect -y 1
 ```
 
-- 以下のように`77`が表示されれば正常です。
+- 以下のように`76`が表示されれば正常です。
 
 ```
      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
@@ -107,7 +107,7 @@ i2cdetect -y 1
 40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-70: -- -- -- -- -- -- -- 76
+70: -- -- -- -- -- -- 76 --
 ```
 
 ### CO2センサー（MH_Z19B）の設定
@@ -198,12 +198,13 @@ sudo apt install default-jdk
 java -version
 ```
 
-3. AWS IAM認証情報を設定します。
+3. AWS IAM認証情報と AWS リージョンを設定します。
 
 ```bash
 export AWS_ACCESS_KEY_ID=<insert your access key>
 export AWS_SECRET_ACCESS_KEY=<insert secret access key>
 export AWS_SESSION_TOKEN=<insert session token>
+export AWS_REGION=<insert region>
 ```
 
 4. Greengrass Coreコンポーネントをインストールします。
@@ -261,7 +262,7 @@ sudo tail -f /greengrass/v2/logs/greengrass.log
 ```
 
 ```bash
-sudo tail -f /greengrass/v2/logs/collectSensorDatao.log
+sudo tail -f /greengrass/v2/logs/collectSensorData.log
 ```
 
 ```bash

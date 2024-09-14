@@ -93,7 +93,7 @@ sudo apt-get install i2c-tools
 i2cdetect -y 1
 ```
 
-- Connection is normal if `77` is displayed like below.
+- Connection is normal if `76` is displayed like below.
 
 ```
      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
@@ -104,7 +104,7 @@ i2cdetect -y 1
 40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-70: -- -- -- -- -- -- -- 76
+70: -- -- -- -- -- -- 76 --
 ```
 
 ### Configure CO2 sensor (MH_Z19B)
@@ -195,12 +195,13 @@ sudo apt install default-jdk
 java -version
 ```
 
-3. Configure AWS IAM credentials.
+3. Configure AWS IAM credentials and default region.
 
 ```bash
 export AWS_ACCESS_KEY_ID=<insert your access key>
 export AWS_SECRET_ACCESS_KEY=<insert secret access key>
 export AWS_SESSION_TOKEN=<insert session token>
+export AWS_REGION=<insert region>
 ```
 
 4. Install Greengrass Core component.
@@ -258,7 +259,7 @@ sudo tail -f /greengrass/v2/logs/greengrass.log
 ```
 
 ```bash
-sudo tail -f /greengrass/v2/logs/collectSensorDatao.log
+sudo tail -f /greengrass/v2/logs/collectSensorData.log
 ```
 
 ```bash
