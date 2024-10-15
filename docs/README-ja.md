@@ -213,7 +213,7 @@ IAMユーザーは、AWS CDKを使用してスタックをデプロイするた�
 
 
 ```bash
-git clone https://github.com/aws-solutions-library-samples/guidance-for-smart-and-sustainable-buildings-on-aws
+git clone https://github.com/aws-solutions-library-samples/guidance-for-smart-and-sustainable-buildings-on-aws.git
 ```
 
 **2. ノード依存関係をインストールする**
