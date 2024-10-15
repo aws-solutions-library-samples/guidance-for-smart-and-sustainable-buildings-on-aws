@@ -1,4 +1,4 @@
-# AWS上のスマートで持続可能な建物
+# AWS上のスマートでより持続可能な建物
 
 英語版は[こちら](/README.md)
 
@@ -24,7 +24,7 @@
 
 ## 概要
 
-これは[AWS上のスマートで持続可能な建物のガイダンス](https://aws.amazon.com/solutions/guidance/smart-and-sustainable-buildings-on-aws/?did=sl_card&trk=sl_card)の実装例で、建物データを収集・可視化し、エネルギー使用量、コスト、関連する温室効果ガス（GHG）排出量を最適化するための洞察を得て運用を自動化する方法を示しています。
+これは[ソリューションガイダンス](https://aws.amazon.com/solutions/guidance/smart-and-sustainable-buildings-on-aws/?did=sl_card&trk=sl_card)の実装例で、建物データを収集・可視化し、エネルギー使用量、コスト、関連する温室効果ガス（GHG）排出量を最適化するための洞察を得て運用を自動化する方法を示しています。
 
 このガイダンスでは、インフラストラクチャ資産のデプロイに[AWS Cloud Development Kit (AWS CDK)](https://aws.amazon.com/cdk/)を使用し、エッジデバイスにコンポーネントをデプロイするために[AWS IoT Greengrass](https://aws.amazon.com/jp/greengrass/)を使用しています。
 
@@ -213,7 +213,7 @@ IAMユーザーは、AWS CDKを使用してスタックをデプロイするた�
 
 
 ```bash
-git clone https://github.com/aws-solutions-library-samples/guidance-for-smart-and-sustainable-buildings-on-aws-demo.git
+git clone https://github.com/aws-solutions-library-samples/guidance-for-smart-and-sustainable-buildings-on-aws
 ```
 
 **2. ノード依存関係をインストールする**
@@ -409,7 +409,7 @@ Amazon Managed Grafanaリソースの作成と使用方法については、[Ama
 
 ## ガイダンスの実行
 
-デプロイが完了すると、すべてが自動的に実行されるはずです。これで、Amazon Managed Grafanaダッシュボードを監視し、AWS上のスマートで持続可能な建物ソリューションが運用を最適化することでエネルギー、コスト、関連するGHG排出量をどのように最適化できるかをテストできます。
+デプロイが完了すると、すべてが自動的に実行されるはずです。これで、Amazon Managed Grafanaダッシュボードを監視し、運用を最適化することでエネルギー、コスト、関連するGHG排出量をどのように最適化できるかをテストできます。
 
 ## 次のステップ
 
