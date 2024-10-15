@@ -81,5 +81,7 @@ export class GreengrassStack extends cdk.Stack {
     new cdk.CfnOutput(this, "AutomateVentilationComponentVersion", {
       value: automateVentilationComponentPublish.componentVersion,
     });
+
+    this.templateOptions.description = "Solution ID: SO9189";
   }
 }
