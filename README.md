@@ -1,4 +1,4 @@
-# Smart and Sustainable Buildings on AWS
+# Smart and More Sustainable Buildings on AWS
 
 日本語は[こちら](/docs/README-ja.md)
 
@@ -24,7 +24,7 @@
 
 ## Overview
 
-This is an example implementation of [Guidance for Smart and Sustainable Buildings on AWS](https://aws.amazon.com/solutions/guidance/smart-and-sustainable-buildings-on-aws/?did=sl_card&trk=sl_card) to demonstrate how to collect and visualize buildings data to gain insight and automate operation to optimize energy usage, cost, and associated Greenhouse Gas (GHG) emissions.
+This is an example implementation of [this Solution Guidance](https://aws.amazon.com/solutions/guidance/smart-and-sustainable-buildings-on-aws/?did=sl_card&trk=sl_card) to demonstrate how to collect and visualize buildings data to gain insight and automate operation to optimize energy usage, cost, and associated Greenhouse Gas (GHG) emissions.
 
 This guidance uses the [AWS Cloud Development Kit (AWS CDK)](https://aws.amazon.com/cdk/) to deploy infrastructure assets and [AWS IoT Greengrass](https://aws.amazon.com/jp/greengrass/) to deploy component to edge devices.
 
@@ -214,7 +214,7 @@ This section provides the steps required to configure your environment before de
 **1. Cloning the repository for this guidance**
 
 ```bash
-git clone https://github.com/aws-solutions-library-samples/guidance-for-smart-and-sustainable-buildings-on-aws-demo.git
+git clone https://github.com/aws-solutions-library-samples/guidance-for-smart-and-sustainable-buildings-on-aws
 ```
 
 **2. Installing node dependencies**
@@ -416,7 +416,7 @@ Run these steps after logging in [AWS Management Console](https://aws.amazon.com
 
 ## Running the Guidance
 
-Everything should run automatically after the deployment completes. You can now monitor the Amazon Managed Grafana dashboard and see how smart and sustainable buildings on AWS solution can optimize energy, cost and associated GHG emission by optimizing operation.
+Everything should run automatically after the deployment completes. You can now monitor the Amazon Managed Grafana dashboard and see how you can optimize energy, cost and associated GHG emission by optimizing operation.
 
 ## Next Steps
 
