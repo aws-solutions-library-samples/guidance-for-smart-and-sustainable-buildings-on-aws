@@ -18,9 +18,8 @@
 6. [Next Steps](#next-steps-required)
 7. [Cleanup](#cleanup-required)
 8. [FAQ](#faq)
-9. [Other references](#other-references)
-10. [Notices](#notices-optional)
-11. [Authors](#authors-optional)
+9. [Notices](#notices-optional)
+10. [Authors](#authors-optional)
 
 ## Overview
 
