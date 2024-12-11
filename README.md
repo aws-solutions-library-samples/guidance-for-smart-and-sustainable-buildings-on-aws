@@ -4,22 +4,22 @@
 
 ## Table of Contents
 
-1. [Overview](#overview-required)
+1. [Overview](#overview)
    - [Architecture](#architecture)
    - [Cost](#cost)
    - [Folder Structure](#folder-structure)
-2. [Prerequisites](#prerequisites-required)
-   - [Operating System](#operating-system-required)
+2. [Prerequisites](#prerequisites)
+   - [Operating System](#operating-system)
    - [Third-Party tools](#third-party-tools)
    - [AWS Account Requirements](#aws-account-requirements)
-3. [Deployment Steps](#deployment-steps-required)
-4. [Deployment Validation](#deployment-validation-required)
-5. [Running the Guidance](#running-the-guidance-required)
-6. [Next Steps](#next-steps-required)
-7. [Cleanup](#cleanup-required)
+3. [Deployment Steps](#deployment-steps)
+4. [Deployment Validation](#deployment-validation)
+5. [Running the Guidance](#running-the-guidance)
+6. [Next Steps](#next-steps)
+7. [Cleanup](#cleanup)
 8. [FAQ](#faq)
-9. [Notices](#notices-optional)
-10. [Authors](#authors-optional)
+9. [Notices](#notices)
+10. [Authors](#authors)
 
 ## Overview
 
