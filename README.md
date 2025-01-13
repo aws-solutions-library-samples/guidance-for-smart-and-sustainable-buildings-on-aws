@@ -250,12 +250,6 @@ export AWS_REGION=us-west-2
 ...
 ```
 
-**5. Bootstrap CDK**
-
-```bash
-cdk bootstrap
-```
-
 ## Deployment Steps
 
 There are 6 steps to deploy the sample code for the guidance:
