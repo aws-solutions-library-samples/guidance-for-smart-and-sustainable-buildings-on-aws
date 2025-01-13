@@ -178,7 +178,8 @@ If you want to use different hardware, additional or modification of steps may b
 - Temperature sensor ([BME280](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/))
 - CO2 sensor ([MH-Z19](https://www.winsen-sensor.com/sensors/co2-sensor/mh-z19c.html))
 - Servo motor ([SG90](https://www.towerpro.com.tw/product/sg90-7/))
-- Plug-in sensor ([SwitchBot Plug Mini](https://www.switchbot.jp/products/switchbot-plug-mini) and [API Keys](https://blog.switchbot.jp/announcement/api-v1-1/))
+- Plug-in sensor ([SwitchBot Plug Mini](https://www.switchbot.jp/products/switchbot-plug-mini))
+   - Obtain [API Token](https://support.switch-bot.com/hc/ja/articles/12822710195351-%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%81%AE%E5%8F%96%E5%BE%97%E6%96%B9%E6%B3%95) and DeviceID which can be found from "Device Information" -> "BLE MAC" in SwitchBot App.
 
 ### AWS Account Requirements
 
@@ -318,7 +319,7 @@ GreengrassStack.sensorDataCollectionComponentVersion = 1.0.0
 Run the command below after followings changes.
 
 - Replace `{locationTable}` with the output value of `SustainableBuilding.DatastorelocationTable~` after running `cdk deploy --all`.
-- Modify [tools/dynamodb/locations_1.json](tools/dynamodb/locations_1.json) and [tools/dynamodb/locations_2.json](tools/dynamodb/locations_2.json) according your location and devices (SwitchBot Plug Mini and Edge Device) info.
+- Modify [tools/dynamodb/locations_1.json](tools/dynamodb/locations_1.json) and [tools/dynamodb/locations_2.json](tools/dynamodb/locations_2.json) according your location and devices (SwitchBot Plug Mini and Edge Device) info. Replace {SwitchBotDeviceID} with the Device ID obtained at [Prerequisite - Hardware](#hardware).
 
 ```bash
 bash tools/dynamodb/add_location.sh {locationTable}
@@ -326,10 +327,22 @@ bash tools/dynamodb/add_location.sh {locationTable}
 
 ### 4. Register secrets into AWS Secret Manager
 
+#### 4.1 OpenWeather API Key
 Run the command below after making the following changes.
 
 - Replace {secretid} with the output value of `ustainableBuilding.WeatherDataCollectionOpenWeatherMapApiSecretName~` after running `cdk deploy --all`.
-- Replace {apikey} with the [OpenWeather Map API Key](https://openweathermap.org/appid) obtained at [Prerequisite - Hardware](#software).
+- Replace {apikey} with the [OpenWeather Map API Key](https://openweathermap.org/appid) obtained at [Prerequisite - Hardware](#hardware).
+
+```bash
+bash tools/secrets-manager/register-openweathermap-secret.sh {secretid} {apikey}
+```
+
+#### 4.2 SwitchBot API Token
+
+Run the command below after making the following changes.
+
+- Replace {secretid} with the output value of `SustainableBuilding.PowerDataCollectionswitchBotApiSecretName~` after running `cdk deploy --all`.
+- Replace {apikey} with the [SwitchBot API Token](https://support.switch-bot.com/hc/ja/articles/12822710195351-%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%81%AE%E5%8F%96%E5%BE%97%E6%96%B9%E6%B3%95) obtained at [Prerequisite - Hardware](#hardware).
 
 ```bash
 bash tools/secrets-manager/register-openweathermap-secret.sh {secretid} {apikey}

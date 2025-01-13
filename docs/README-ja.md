@@ -178,6 +178,7 @@ smart-and-sustainable-buildings/
 - CO2センサー（[MH-Z19](https://www.winsen-sensor.com/sensors/co2-sensor/mh-z19c.html))
 - サーボモーター（[SG90](https://www.towerpro.com.tw/product/sg90-7/))
 - プラグインセンサー（[SwitchBot Plug Mini](https://www.switchbot.jp/products/switchbot-plug-mini)と[APIキー](https://blog.switchbot.jp/announcement/api-v1-1/))
+   - SwitchBot アプリから[API Token](https://support.switch-bot.com/hc/ja/articles/12822710195351-%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%81%AE%E5%8F%96%E5%BE%97%E6%96%B9%E6%B3%95) とデバイスIDを取得してください。デバイスIDはSwitchBotアプリの「デバイス情報」の「BLE MAC」から取得できます（コロンは不要です）。
 
 ### AWSアカウントの要件
 
@@ -317,13 +318,15 @@ GreengrassStack.sensorDataCollectionComponentVersion = 1.0.0
 以下のコマンドを実行する前に、次の変更を行ってください：
 
 - {locationTable}を`cdk deploy --all`を実行した後の出力値`SustainableBuilding.DatastorelocationTable~`に置き換えてください。
-- [tools/dynamodb/locations_1.json](tools/dynamodb/locations_1.json)と[tools/dynamodb/locations_2.json](tools/dynamodb/locations_2.json)を、あなたの場所とデバイス（SwitchBot Plug MiniとEdgeデバイス）の情報に合わせて修正してください。
+- [tools/dynamodb/locations_1.json](tools/dynamodb/locations_1.json)と[tools/dynamodb/locations_2.json](tools/dynamodb/locations_2.json)を、あなたの場所とデバイス（SwitchBot Plug MiniとEdgeデバイス）の情報に合わせて修正してください。{SwitchBotDeviceID} は、[前提条件 - ハードウェア](#ハードウェア)で取得したデバイスIDに置き換えてください。.
 
 ```bash
 bash tools/dynamodb/add_location.sh {locationTable}
 ```
 
 ### 4. シークレットをAWS Secret Managerに登録する
+
+#### 4.1 OpenWeather Map API キー
 
 以下のコマンドを実行する前に、次の変更を行ってください：
 
@@ -333,6 +336,13 @@ bash tools/dynamodb/add_location.sh {locationTable}
 ```bash
 bash tools/secrets-manager/register-openweathermap-secret.sh {secretid} {apikey}
 ```
+
+#### 4.2 SwitchBot API Token
+
+以下のコマンドを実行する前に、次の変更を行ってください：
+
+- `{secretid}` を`cdk deploy --all`を実行した後の出力値`SustainableBuilding.PowerDataCollectionswitchBotApiSecretName~`に置き換えてください。
+- {apikey}を[前提条件 - ハードウェア](#ハードウェア)で取得した[SwitchBot API Token](https://support.switch-bot.com/hc/ja/articles/12822710195351-%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%81%AE%E5%8F%96%E5%BE%97%E6%96%B9%E6%B3%95)に置き換えてください。
 
 ### 5. デバイスを設定する
 
