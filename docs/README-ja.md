@@ -250,12 +250,6 @@ export AWS_REGION=us-west-2
 ...
 ```
 
-**5. CDKをブートストラップする**
-
-```bash
-cdk bootstrap
-```
-
 ## デプロイ手順
 
 このガイダンスのサンプルコードをデプロイするには6つの手順があります：
@@ -267,11 +261,11 @@ cdk bootstrap
 [5. デバイスを設定する](#5-デバイスを設定する)
 [6. Amazon Managed Grafanaダッシュボードをセットアップする](#6-amazon-managed-grafanaダッシュボードをセットアップする)
 
-### 1. AWS Lambda レイヤーのPython依存関係をインストールする
+### 1. AWS Lambda の依存関係をインストールする
 
 ```bash
-pip install -t lib/lambda/layer/open-weather-map/python -r lib/lambda/layer/open-weather-map/requirements.txt
-pip install -t lib/lambda/layer/requests/python -r lib/lambda/layer/requests/requirements.txt
+chmod +x tools/install.sh
+./tools/install.sh
 ```
 
 ### 2. AWS CDKでインフラストラクチャをデプロイする

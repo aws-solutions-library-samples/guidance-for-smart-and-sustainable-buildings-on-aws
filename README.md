@@ -250,12 +250,6 @@ export AWS_REGION=us-west-2
 ...
 ```
 
-**5. Bootstrap CDK**
-
-```bash
-cdk bootstrap
-```
-
 ## Deployment Steps
 
 There are 6 steps to deploy the sample code for the guidance:
@@ -267,11 +261,11 @@ There are 6 steps to deploy the sample code for the guidance:
 [5. Configure device](#5-configure-device)
 [6. Setup Amazon Managed Grafana Dashboard](#6-setup-amazon-managed-grafana-dashboard)
 
-### 1. Install Python dependencies for the AWS Lambda Layers
+### 1. Install dependencies for the AWS Lambda
 
 ```bash
-pip install -t lib/lambda/layer/open-weather-map/python -r lib/lambda/layer/open-weather-map/requirements.txt
-pip install -t lib/lambda/layer/requests/python -r lib/lambda/layer/requests/requirements.txt
+chmod +x tools/install.sh
+./tools/install.sh
 ```
 
 ### 2. Deploy the infrastructure with AWS CDK
