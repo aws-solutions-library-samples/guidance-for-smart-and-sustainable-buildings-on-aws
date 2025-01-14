@@ -178,7 +178,7 @@ If you want to use different hardware, additional or modification of steps may b
 - Temperature sensor ([BME280](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/))
 - CO2 sensor ([MH-Z19](https://www.winsen-sensor.com/sensors/co2-sensor/mh-z19c.html))
 - Servo motor ([SG90](https://www.towerpro.com.tw/product/sg90-7/))
-- Plug-in sensor ([SwitchBot Plug Mini](https://www.switchbot.jp/products/switchbot-plug-mini))
+- Plug-in sensor ([SwitchBot Plug Mini](https://www.switch-bot.com/products/switchbot-plug-mini))
    - Obtain [API Token](https://support.switch-bot.com/hc/en-us/articles/12822710195351-How-to-obtain-a-Token) and DeviceID which can be found from "Device Information" -> "BLE MAC" in SwitchBot App.
 
 ### AWS Account Requirements
