@@ -240,7 +240,7 @@ export AWS_SESSION_TOKEN=<insert session token>
 export AWS_REGION=us-west-2
 ```
 
-- [GDK Config](/lib/gg_components/)配下の各コンポーネント（[自動換気コンポーネント](lib/gg_components/automate-ventilation/gdk-config.json)と[センサーデータ収集コンポーネント](lib/gg_components/sensor-data-collection/gdk-config.json)）の`gdk-config.json`ファイル内の`{aws_region}`を変更します。
+- [GDK Config](/lib/gg_components/)配下の各コンポーネント（[自動換気コンポーネント](/lib/gg_components/automate-ventilation/gdk-config.json)と[センサーデータ収集コンポーネント](/lib/gg_components/sensor-data-collection/gdk-config.json)）の`gdk-config.json`ファイル内の`{aws_region}`を変更します。
 
 ```json
 ...
@@ -255,12 +255,12 @@ export AWS_REGION=us-west-2
 
 このガイダンスのサンプルコードをデプロイするには6つの手順があります：
 
-[1. AWS Lambda レイヤーPython依存関係をインストールする](#1-aws-lambda-レイヤーのpython依存関係をインストールする)
-[2. AWS CDKでインフラストラクチャをデプロイする](#2-aws-cdkでインフラストラクチャをデプロイする)
-[3. デバイス情報をAmazon DynamoDBに登録する](#3-デバイス情報をdynamodbに登録する)
-[4. シークレットをAWS Secrets Managerに登録する](#4-シークレットをaws-secret-managerに登録する)
-[5. デバイスを設定する](#5-デバイスを設定する)
-[6. Amazon Managed Grafanaダッシュボードをセットアップする](#6-amazon-managed-grafanaダッシュボードをセットアップする)
+1. [AWS Lambda の依存関係をインストールする](#1-aws-lambda-の依存関係をインストールする)
+2. [AWS CDKでインフラストラクチャをデプロイする](#2-aws-cdkでインフラストラクチャをデプロイする)
+3. [デバイス情報をDynamoDBに登録する](#3-デバイス情報をdynamodbに登録する)
+4. [シークレットをAWS Secrets Managerに登録する](#4-シークレットをaws-secrets-managerに登録する)
+5. [デバイスを設定する](#5-デバイスを設定する)
+6. [Amazon Managed Grafanaダッシュボードをセットアップする](#6-amazon-managed-grafanaダッシュボードをセットアップする)
 
 ### 1. AWS Lambda の依存関係をインストールする
 
@@ -318,13 +318,13 @@ GreengrassStack.sensorDataCollectionComponentVersion = 1.0.0
 以下のコマンドを実行する前に、次の変更を行ってください：
 
 - {locationTable}を`cdk deploy --all`を実行した後の出力値`SustainableBuilding.DatastorelocationTable~`に置き換えてください。
-- [tools/dynamodb/locations_1.json](tools/dynamodb/locations_1.json)と[tools/dynamodb/locations_2.json](tools/dynamodb/locations_2.json)を、あなたの場所とデバイス（SwitchBot Plug MiniとEdgeデバイス）の情報に合わせて修正してください。{SwitchBotDeviceID} は、[前提条件 - ハードウェア](#ハードウェア)で取得したデバイスIDに置き換えてください。.
+- [/tools/dynamodb/locations_1.json](/tools/dynamodb/locations_1.json)と[/tools/dynamodb/locations_2.json](/tools/dynamodb/locations_2.json)を、あなたの場所とデバイス（SwitchBot Plug MiniとEdgeデバイス）の情報に合わせて修正してください。{SwitchBotDeviceID} は、[前提条件 - ハードウェア](#ハードウェア)で取得したデバイスIDに置き換えてください。.
 
 ```bash
 bash tools/dynamodb/add_location.sh {locationTable}
 ```
 
-### 4. シークレットをAWS Secret Managerに登録する
+### 4. シークレットをAWS Secrets Managerに登録する
 
 #### 4.1 OpenWeather Map API キー
 
@@ -346,7 +346,7 @@ bash tools/secrets-manager/register-openweathermap-secret.sh {secretid} {apikey}
 
 ### 5. デバイスを設定する
 
-[DEVICE_SETUP](/docs/DEVICE_SETUP-ja.md)を参照してAWS IoT Greengrassデバイスをセットアップしてください。
+[DEVICE_SETUP](./DEVICE_SETUP-ja.md)を参照してAWS IoT Greengrassデバイスをセットアップしてください。
 
 ### 6. Amazon Managed Grafanaダッシュボードをセットアップする
 
