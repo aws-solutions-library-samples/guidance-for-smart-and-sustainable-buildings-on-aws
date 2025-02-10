@@ -13,6 +13,6 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.95",
     "@types/node": "^20.11.0",
-    "esbuild": "^0.14.39"
+    "esbuild": "^0.25.0"
   }
 }
