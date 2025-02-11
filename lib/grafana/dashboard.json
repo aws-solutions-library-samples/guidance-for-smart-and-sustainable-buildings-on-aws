@@ -21,6 +21,13 @@
       "label": "EnergyCost",
       "value": "29",
       "description": ""
+    },
+    {
+      "name": "VAR_ENERGYCOSTINDOLLAR",
+      "type": "constant",
+      "label": "EnergyCostInDollar",
+      "value": "0.211",
+      "description": ""
     }
   ],
   "__elements": {},
@@ -47,13 +54,13 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.4.7"
+      "version": "10.4.1"
     },
     {
       "type": "datasource",
       "id": "grafana-timestream-datasource",
       "name": "Amazon Timestream",
-      "version": "2.6.1"
+      "version": "2.9.8"
     },
     {
       "type": "panel",
@@ -110,6 +117,8 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 400,
+          "min": 100,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -139,16 +148,21 @@
       },
       "id": 33,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -177,6 +191,8 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 200,
+          "min": 100,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -206,16 +222,21 @@
       },
       "id": 34,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -244,6 +265,8 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 0.1,
+          "min": 0.01,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -261,7 +284,7 @@
               }
             ]
           },
-          "unit": "currencyJPY"
+          "unit": "currencyUSD"
         },
         "overrides": []
       },
@@ -273,16 +296,21 @@
       },
       "id": 35,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -291,7 +319,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"wattHour\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by time desc\n)\nSELECT sum (wattHour) / 1000 * $EnergyCost as \"Energy Cost\"\n  FROM binned_query",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"wattHour\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by time desc\n)\nSELECT sum (wattHour) / 1000 * $EnergyCostInDollar as \"Energy Cost\"\n  FROM binned_query",
           "refId": "A",
           "table": "\"power\""
         }
@@ -308,22 +336,25 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "fixedColor": "#FF780A",
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 50,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -360,7 +391,47 @@
           },
           "unit": "watt"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Electricity Consumption by Facility 千葉みなとFC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Chiba"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Electricity Consumption by Facility 青梅FC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tokyo"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tokyo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 5,
@@ -390,7 +461,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"AvgPower\"\n     , LOCATION, DeviceName\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), LOCATION, DeviceName\n order by time desc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, PowerByLocation) as \"Electricity Consumption by Facility\"\nFROM (\n  SELECT time, LOCATION, SUM(AvgPower) as \"PowerByLocation\"\n    FROM binned_query\n    GROUP BY time, LOCATION\n   )\nGROUP BY LOCATION",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"AvgPower\"\n     , LOCATION, DeviceName\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), LOCATION, DeviceName\n order by LOCATION asc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, PowerByLocation) as \"Electricity Consumption by Facility\"\nFROM (\n  SELECT time, LOCATION, SUM(AvgPower) as \"PowerByLocation\"\n    FROM binned_query\n    GROUP BY time, LOCATION\n   )\nGROUP BY LOCATION",
           "refId": "A",
           "table": "\"power\""
         }
@@ -409,7 +480,21 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "千葉みなとFC": {
+                  "index": 1,
+                  "text": "Chiba"
+                },
+                "青梅FC": {
+                  "index": 0,
+                  "text": "Tokyo"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "max": 200,
           "min": 50,
           "thresholds": {
@@ -441,6 +526,8 @@
       },
       "id": 40,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [],
@@ -448,9 +535,10 @@
           "values": true
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -465,7 +553,6 @@
         }
       ],
       "title": "Latest electricity usage by facility",
-      "transformations": [],
       "type": "gauge"
     },
     {
@@ -480,6 +567,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -493,6 +581,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -522,14 +611,69 @@
                 "value": 800
               },
               {
-                "color": "red",
+                "color": "light-red",
                 "value": 1000
               }
             ]
           },
           "unit": "ppm"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average CO2 ppm 千葉みなとFC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Chiba"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average CO2 ppm 青梅FC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tokyo"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Chiba"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tokyo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 7,
@@ -559,7 +703,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(CO2) AS \"AvgCO2\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), LOCATION\n order by time desc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, AvgCO2) as \"Average CO2 ppm\"\n  FROM binned_query\n GROUP BY LOCATION",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(CO2) AS \"AvgCO2\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), LOCATION\n order by LOCATION asc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, AvgCO2) as \"Average CO2 ppm\"\n  FROM binned_query\n GROUP BY LOCATION",
           "refId": "A",
           "table": "\"sensor\""
         }
@@ -578,7 +722,21 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "千葉みなとFC": {
+                  "index": 1,
+                  "text": "Chiba"
+                },
+                "青梅FC": {
+                  "index": 0,
+                  "text": "Tokyo"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "max": 1000,
           "min": 400,
           "thresholds": {
@@ -610,6 +768,8 @@
       },
       "id": 41,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [],
@@ -617,9 +777,10 @@
           "values": true
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -645,9 +806,11 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-RdYlGr"
+            "mode": "thresholds"
           },
           "mappings": [],
+          "max": 250,
+          "min": 50,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -657,17 +820,42 @@
               },
               {
                 "color": "#EAB839",
-                "value": 5000
+                "value": 100
               },
               {
                 "color": "red",
-                "value": 10000
+                "value": 200
               }
             ]
           },
           "unit": "watth"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Facility 千葉みなとFC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Chiba"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Facility 青梅FC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tokyo"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 6,
@@ -682,13 +870,17 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -697,12 +889,12 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"wattHour\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by time desc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, wattHour) as \"Facility\"\n  FROM binned_query\n GROUP BY LOCATION",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"wattHour\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by LOCATION ASC\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, wattHour) as \"Facility\"\n  FROM binned_query\n GROUP BY LOCATION\n",
           "refId": "A",
           "table": "\"power\""
         }
       ],
-      "title": "Electricity Consumption by Facilities",
+      "title": "Electricity Consumption by Facility",
       "type": "stat"
     },
     {
@@ -714,6 +906,8 @@
       "fieldConfig": {
         "defaults": {
           "mappings": [],
+          "max": 200,
+          "min": 30,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -723,17 +917,42 @@
               },
               {
                 "color": "#EAB839",
-                "value": 5000
+                "value": 80
               },
               {
                 "color": "red",
-                "value": 10000
+                "value": 110
               }
             ]
           },
           "unit": "massg"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Facility 千葉みなとFC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Chiba"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Facility 青梅FC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tokyo"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 6,
@@ -745,16 +964,20 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -763,12 +986,12 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE)  AS \"wattHour\"\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) /1000 * $CarbonIntensity as \"CO2Emission\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by time desc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, CO2Emission) as \"Facility\"\n  FROM binned_query\n GROUP BY LOCATION",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE)  AS \"wattHour\"\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) /1000 * $CarbonIntensity as \"CO2Emission\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by LOCATION asc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, CO2Emission) as \"Facility\"\n  FROM binned_query\n GROUP BY LOCATION\n ORDER BY LOCATION",
           "refId": "A",
           "table": "\"power\""
         }
       ],
-      "title": "GHG (CO2e) Emissions by Facilities",
+      "title": "GHG (CO2e) Emissions by Facility",
       "type": "stat"
     },
     {
@@ -776,10 +999,12 @@
         "type": "grafana-timestream-datasource",
         "uid": "${DS_AMAZON_TIMESTREAM}"
       },
-      "description": "Electricity cost by facilities",
+      "description": "Electricity Cost by Facility",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
+          "max": 1,
+          "min": 0.005,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -789,17 +1014,42 @@
               },
               {
                 "color": "#EAB839",
-                "value": 5000
+                "value": 0.03
               },
               {
                 "color": "red",
-                "value": 10000
+                "value": 0.04
               }
             ]
           },
-          "unit": "currencyJPY"
+          "unit": "currencyUSD"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Facility 千葉みなとFC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Chiba"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Facility 青梅FC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tokyo"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 6,
@@ -811,16 +1061,20 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -829,12 +1083,12 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"wattHour\"\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) /1000 * $EnergyCost as \"Cost\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by time desc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, Cost) as \"Facility\"\n  FROM binned_query\n GROUP BY LOCATION",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"wattHour\"\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) /1000 * $EnergyCostInDollar as \"Cost\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by LOCATION asc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, Cost) as \"Facility\"\n  FROM binned_query\n GROUP BY LOCATION",
           "refId": "A",
           "table": "\"power\""
         }
       ],
-      "title": "Electricity cost by facilities",
+      "title": "Electricity Cost by Facility",
       "type": "stat"
     },
     {
@@ -862,10 +1116,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -899,6 +1149,7 @@
               "showLegend": true,
               "style": {
                 "color": {
+                  "field": "City",
                   "fixed": "blue"
                 },
                 "opacity": 0.8,
@@ -951,7 +1202,7 @@
           "zoom": 7.88
         }
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -960,7 +1211,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "openweathermap",
-          "rawQuery": "WITH latest_records AS (\n  SELECT\n    location,\n    MAX(time) as latest_time\n  FROM \n    $__database.$__table\n  WHERE\n    $__timeFilter\n  GROUP by\n    location\n)\n\nSELECT\n  CASE\n    WHEN t.location = '35.3811-140.0626' THEN 'Chiba'\n    WHEN t.location = '35.3748-139.4311' THEN 'Tokyo'\n    ELSE t.location\n  END as \"City\",\n  -- t.location,\n  t.BAROMETRIC_PRESSURE as \"気圧\",\n  t.STATUS as \"天気\",\n  t.HUMIDITY as \"Humid\",\n  t.TEMP as \"Temp\",\n  t.LON as \"Long\",\n  t.LAT as \"Lat\",\n  t.time as \"Time\"\nFROM\n  $__database.$__table t\nJOIN\n  latest_records l\nON\n  t.location = l.location AND t.time = l.latest_time\nWHERE t.location <> 'chiba'",
+          "rawQuery": "WITH latest_records AS (\n  SELECT\n    location,\n    MAX(time) as latest_time\n  FROM \n    $__database.$__table\n  WHERE\n    $__timeFilter\n  GROUP by\n    location\n)\n\nSELECT\n  CASE\n    WHEN t.location = '35.3811-140.0626' THEN 'Chiba'\n    WHEN t.location = '35.3748-139.4311' THEN 'Tokyo'\n    ELSE t.location\n  END as \"City\",\n  -- t.location,\n  t.BAROMETRIC_PRESSURE as \"Pressure\",\n  t.STATUS as \"Weather\",\n  t.HUMIDITY as \"Humid\",\n  t.TEMP as \"Temp\",\n  t.LON as \"Long\",\n  t.LAT as \"Lat\",\n  t.time as \"Time\"\nFROM\n  $__database.$__table t\nJOIN\n  latest_records l\nON\n  t.location = l.location AND t.time = l.latest_time\nWHERE t.location <> 'chiba'",
           "refId": "A",
           "table": "\"weather\""
         }
@@ -980,6 +1231,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -993,6 +1245,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1029,7 +1282,62 @@
           },
           "unit": "celsius"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average Temperature 千葉みなとFC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Chiba"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average Temperature 青梅FC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tokyo"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tokyo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Chiba"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 6,
@@ -1059,7 +1367,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "openweathermap",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(TEMP) AS \"AvgTemperature\"\n     , location\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), location\n order by time desc\n)\nSELECT location, CREATE_TIME_SERIES(time, AvgTemperature) as \"Average Temperature\"\n  FROM binned_query\n  WHERE location <> 'chiba'\n GROUP BY location",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(TEMP) AS \"AvgTemperature\"\n     , location\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), location\n order by location asc\n)\nSELECT location, CREATE_TIME_SERIES(time, AvgTemperature) as \"Average Temperature\"\n  FROM binned_query\n  WHERE location <> 'chiba'\n GROUP BY location",
           "refId": "A",
           "table": "\"weather\""
         }
@@ -1079,6 +1387,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1092,6 +1401,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1105,7 +1415,7 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "line+area"
+              "mode": "dashed"
             }
           },
           "mappings": [],
@@ -1122,13 +1432,72 @@
               },
               {
                 "color": "#EAB839",
-                "value": 23
+                "value": 25
+              },
+              {
+                "color": "light-red",
+                "value": 27
               }
             ]
           },
           "unit": "celsius"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average Temperature 青梅FC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tokyo"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average Temperature 千葉みなとFC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Chiba"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Chiba"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tokyo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 6,
@@ -1157,7 +1526,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(TEMPERATURE) AS AvgTemp\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), LOCATION\n order by time desc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, AvgTemp) as \"Average Temperature\"\n  FROM binned_query\n GROUP BY LOCATION",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(TEMPERATURE) AS AvgTemp\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), LOCATION\n order by LOCATION asc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, AvgTemp) as \"Average Temperature\"\n  FROM binned_query\n GROUP BY LOCATION",
           "refId": "A",
           "table": "\"sensor\""
         }
@@ -1176,7 +1545,21 @@
           "color": {
             "mode": "continuous-GrYlRd"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "千葉みなとFC": {
+                  "index": 1,
+                  "text": "Chiba"
+                },
+                "青梅FC": {
+                  "index": 0,
+                  "text": "Tokyo"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "max": 30,
           "min": 0,
           "thresholds": {
@@ -1209,17 +1592,21 @@
       "id": 42,
       "options": {
         "displayMode": "gradient",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
+        "namePlacement": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": true
         },
-        "showUnfilled": true
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -1233,14 +1620,13 @@
           "table": "\"sensor\""
         }
       ],
-      "title": "Latest temperature by facilities",
+      "title": "Latest temperature by facility",
       "type": "bargauge"
     }
   ],
-  "refresh": "1m",
+  "refresh": "10s",
   "revision": 1,
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
@@ -1354,17 +1740,38 @@
             "selected": false
           }
         ]
+      },
+      {
+        "description": "Electricity per KWH in West South Central, average price, not seasonally adjusted\nhttps://data.bls.gov/timeseries/APU037072610?amp%253bdata_tool=XGtable&output_view=data&include_graphs=true",
+        "hide": 2,
+        "label": "EnergyCostInDollar",
+        "name": "EnergyCostInDollar",
+        "query": "${VAR_ENERGYCOSTINDOLLAR}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_ENERGYCOSTINDOLLAR}",
+          "text": "${VAR_ENERGYCOSTINDOLLAR}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_ENERGYCOSTINDOLLAR}",
+            "text": "${VAR_ENERGYCOSTINDOLLAR}",
+            "selected": false
+          }
+        ]
       }
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Sustainable Building  Demo Dashboard",
-  "uid": "RfeBuweVa",
-  "version": 6,
+  "title": "Sustainable Building  Demo Dashboard EN",
+  "uid": "RfeBuweVb",
+  "version": 15,
   "weekStart": ""
 }

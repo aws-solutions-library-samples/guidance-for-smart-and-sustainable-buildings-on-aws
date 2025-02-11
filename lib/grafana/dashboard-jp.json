@@ -53,7 +53,7 @@
       "type": "datasource",
       "id": "grafana-timestream-datasource",
       "name": "Amazon Timestream",
-      "version": "2.6.1"
+      "version": "2.9.8"
     },
     {
       "type": "panel",
@@ -110,6 +110,8 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 400,
+          "min": 100,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -139,6 +141,8 @@
       },
       "id": 33,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": ["sum"],
@@ -148,7 +152,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -177,6 +181,8 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 200,
+          "min": 100,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -206,6 +212,8 @@
       },
       "id": 34,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": ["sum"],
@@ -215,7 +223,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -244,6 +252,8 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 0.1,
+          "min": 0.01,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -273,6 +283,8 @@
       },
       "id": 35,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": ["sum"],
@@ -282,7 +294,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -308,16 +320,18 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "fixedColor": "#FF780A",
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 50,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -390,7 +404,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"AvgPower\"\n     , LOCATION, DeviceName\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), LOCATION, DeviceName\n order by time desc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, PowerByLocation) as \"拠点別電力消費量\"\nFROM (\n  SELECT time, LOCATION, SUM(AvgPower) as \"PowerByLocation\"\n    FROM binned_query\n    GROUP BY time, LOCATION\n   )\nGROUP BY LOCATION",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"AvgPower\"\n     , LOCATION, DeviceName\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), LOCATION, DeviceName\n order by LOCATION asc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, PowerByLocation) as \"拠点別電力消費量\"\nFROM (\n  SELECT time, LOCATION, SUM(AvgPower) as \"PowerByLocation\"\n    FROM binned_query\n    GROUP BY time, LOCATION\n   )\nGROUP BY LOCATION",
           "refId": "A",
           "table": "\"power\""
         }
@@ -441,6 +455,8 @@
       },
       "id": 40,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [],
@@ -450,7 +466,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -559,7 +575,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(CO2) AS \"AvgCO2\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), LOCATION\n order by time desc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, AvgCO2) as \"平均 CO2 濃度\"\n  FROM binned_query\n GROUP BY LOCATION",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(CO2) AS \"AvgCO2\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), LOCATION\n order by LOCATION asc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, AvgCO2) as \"平均 CO2 濃度\"\n  FROM binned_query\n GROUP BY LOCATION",
           "refId": "A",
           "table": "\"sensor\""
         }
@@ -610,6 +626,8 @@
       },
       "id": 41,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [],
@@ -619,7 +637,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -645,9 +663,11 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-RdYlGr"
+            "mode": "thresholds"
           },
           "mappings": [],
+          "max": 250,
+          "min": 50,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -657,11 +677,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 5000
+                "value": 100
               },
               {
                 "color": "red",
-                "value": 10000
+                "value": 200
               }
             ]
           },
@@ -688,7 +708,10 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true,
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -697,7 +720,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"wattHour\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by time desc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, wattHour) as \"拠点\"\n  FROM binned_query\n GROUP BY LOCATION",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"wattHour\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by LOCATION asc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, wattHour) as \"拠点\"\n  FROM binned_query\n GROUP BY LOCATION",
           "refId": "A",
           "table": "\"power\""
         }
@@ -714,6 +737,8 @@
       "fieldConfig": {
         "defaults": {
           "mappings": [],
+          "max": 200,
+          "min": 30,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -723,11 +748,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 5000
+                "value": 80
               },
               {
                 "color": "red",
-                "value": 10000
+                "value": 110
               }
             ]
           },
@@ -745,16 +770,18 @@
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": ["sum"],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -763,7 +790,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE)  AS \"wattHour\"\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) /1000 * $CarbonIntensity as \"CO2Emission\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by time desc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, CO2Emission) as \"拠点\"\n  FROM binned_query\n GROUP BY LOCATION",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE)  AS \"wattHour\"\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) /1000 * $CarbonIntensity as \"CO2Emission\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by LOCATION asc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, CO2Emission) as \"拠点\"\n  FROM binned_query\n GROUP BY LOCATION",
           "refId": "A",
           "table": "\"power\""
         }
@@ -780,6 +807,8 @@
       "fieldConfig": {
         "defaults": {
           "mappings": [],
+          "max": 150,
+          "min": 0.7,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -789,11 +818,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 5000
+                "value": 3
               },
               {
                 "color": "red",
-                "value": 10000
+                "value": 5
               }
             ]
           },
@@ -820,7 +849,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -829,7 +858,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "sustainability_sensor",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"wattHour\"\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) /1000 * $EnergyCost as \"Cost\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by time desc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, Cost) as \"拠点\"\n  FROM binned_query\n GROUP BY LOCATION",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, 1h) as time\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) AS \"wattHour\"\n     , avg(ELECTRIC_CURRENT) * avg(VOLTAGE) /1000 * $EnergyCost as \"Cost\"\n     , LOCATION\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, 1h), LOCATION\n order by LOCATION asc\n)\nSELECT LOCATION, CREATE_TIME_SERIES(time, Cost) as \"拠点\"\n  FROM binned_query\n GROUP BY LOCATION",
           "refId": "A",
           "table": "\"power\""
         }
@@ -862,10 +891,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -951,7 +976,7 @@
           "zoom": 7.88
         }
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -993,6 +1018,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1059,7 +1085,7 @@
             "uid": "${DS_AMAZON_TIMESTREAM}"
           },
           "measure": "openweathermap",
-          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(TEMP) AS \"AvgTemperature\"\n     , location\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), location\n order by time desc\n)\nSELECT location, CREATE_TIME_SERIES(time, AvgTemperature) as \"Average Temperature\"\n  FROM binned_query\n  WHERE location <> 'chiba'\n GROUP BY location",
+          "rawQuery": "WITH binned_query AS (\nSELECT bin(time, $bucketInterval) as time\n     , avg(TEMP) AS \"AvgTemperature\"\n     , location\n  FROM $__database.$__table\n WHERE $__timeFilter\n group by bin(time, $bucketInterval), location\n order by location asc\n)\nSELECT location, CREATE_TIME_SERIES(time, AvgTemperature) as \"Average Temperature\"\n  FROM binned_query\n  WHERE location <> 'chiba'\n GROUP BY location",
           "refId": "A",
           "table": "\"weather\""
         }
@@ -1209,8 +1235,9 @@
       "id": 42,
       "options": {
         "displayMode": "gradient",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
-        "minVizWidth": 0,
+        "namePlacement": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [],
@@ -1219,7 +1246,7 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "database": "\"sustainableBuilding\"",
@@ -1237,10 +1264,9 @@
       "type": "bargauge"
     }
   ],
-  "refresh": "1m",
+  "refresh": "10s",
   "revision": 1,
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
