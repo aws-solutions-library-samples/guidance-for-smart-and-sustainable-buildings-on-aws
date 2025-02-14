@@ -75,7 +75,7 @@ export class SensorDataCollection extends Construct {
       this,
       "sensorDataCollectionLambda",
       {
-        runtime: lambda.Runtime.PYTHON_3_12,
+        runtime: lambda.Runtime.PYTHON_3_13,
         code: lambda.Code.fromAsset("lib/lambda/iot/sensor-data-collection"),
         handler: "index.handler",
         role: sensorDataCollectionLambdaRole,
@@ -167,7 +167,7 @@ export class SensorDataCollection extends Construct {
       this,
       "updateDeviceShadowLambda",
       {
-        runtime: lambda.Runtime.PYTHON_3_12,
+        runtime: lambda.Runtime.PYTHON_3_13,
         code: lambda.Code.fromAsset("lib/lambda/iot/update-device-shadow"),
         handler: "index.handler",
         role: updateDeviceShadowLambdaRole,

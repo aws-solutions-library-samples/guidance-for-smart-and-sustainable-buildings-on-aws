@@ -9,18 +9,19 @@ export enum PythonVersion {
   PYTHON_3_10 = "3.10",
   PYTHON_3_11 = "3.11",
   PYTHON_3_12 = "3.12",
+  PYTHON_3_13 = "3.13",
 }
 export interface PythonGdkPublishProps extends GdkPublishProps {
   /**
    * Python version used in CodeBuild project.
-   * @default 3.12
+   * @default 3.13
    */
   readonly pythonVersion?: PythonVersion;
 }
 
 export class PythonGdkPublish extends GdkPublish {
   constructor(scope: Construct, id: string, props: PythonGdkPublishProps) {
-    const { pythonVersion = "3.12" } = props;
+    const { pythonVersion = "3.13" } = props;
     let buildImage = "aws/codebuild/standard:5.0";
     // ref: https://docs.aws.amazon.com/codebuild/latest/userguide/available-runtimes.html#linux-runtimes
     switch (pythonVersion) {
@@ -38,6 +39,8 @@ export class PythonGdkPublish extends GdkPublish {
       case "3.12":
         buildImage = "aws/codebuild/standard:7.0";
         break;
+      case "3.13":
+        buildImage = "aws/codebuild/standard:7.0";
       default:
         Annotations.of(scope).addError(
           `Unsupported Python version: ${pythonVersion}`,
