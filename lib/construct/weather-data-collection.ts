@@ -78,7 +78,7 @@ export class WeatherDataCollection extends Construct {
       "OpenWeatherMaplambdaLayer",
       {
         code: lambda.AssetCode.fromAsset("lib/lambda/layer/open-weather-map"),
-        compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
+        compatibleRuntimes: [lambda.Runtime.PYTHON_3_13],
       },
     );
 
@@ -87,7 +87,7 @@ export class WeatherDataCollection extends Construct {
       this,
       "weatherDataCollectionLambda",
       {
-        runtime: lambda.Runtime.PYTHON_3_12,
+        runtime: lambda.Runtime.PYTHON_3_13,
         code: lambda.Code.fromAsset(
           "lib/lambda/external-data-collection/open-weather-map",
         ),

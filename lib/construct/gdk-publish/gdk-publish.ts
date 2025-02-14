@@ -100,7 +100,7 @@ export class GdkPublish extends Construct {
 
     const handler = new SingletonFunction(this, "CustomResourceHandler", {
       // Use raw string to avoid from tightening CDK version requirement
-      runtime: new Runtime("nodejs20.x", RuntimeFamily.NODEJS),
+      runtime: new Runtime("nodejs22.x", RuntimeFamily.NODEJS),
       code: Code.fromAsset(
         path.join(__dirname, "../../lambda/gdk-publish/dist/"),
       ),
@@ -130,6 +130,11 @@ export class GdkPublish extends Construct {
       case "aws/codebuild/amazonlinux2-x86_64-standard:5.0":
       case "aws/codebuild/amazonlinux2-aarch64-standard:3.0":
         pythonVersion = "3.12";
+        break;
+      case "aws/codebuild/standard:7.0":
+      case "aws/codebuild/amazonlinux2-x86_64-standard:5.0":
+      case "aws/codebuild/amazonlinux2-aarch64-standard:3.0":
+        pythonVersion = "3.13";
         break;
       default:
         Annotations.of(this).addError(`Unsupported build image: ${buildImage}`);

@@ -98,7 +98,7 @@ export class PowerDataCollection extends Construct {
       "powerDataCollectionLayer",
       {
         code: lambda.AssetCode.fromAsset("lib/lambda/layer/requests"),
-        compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
+        compatibleRuntimes: [lambda.Runtime.PYTHON_3_13],
       },
     );
 
@@ -107,7 +107,7 @@ export class PowerDataCollection extends Construct {
       this,
       "powerDataCollectionLambda",
       {
-        runtime: lambda.Runtime.PYTHON_3_12,
+        runtime: lambda.Runtime.PYTHON_3_13,
         code: lambda.Code.fromAsset(
           "lib/lambda/external-data-collection/power/switchbot",
         ),
