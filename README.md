@@ -1,3 +1,6 @@
+# ⚠️ Deprecation Warning
+This repository is no longer maintained as of July 2026.
+
 # Smart and More Sustainable Buildings on AWS
 
 日本語は[こちら](/docs/README-ja.md)
